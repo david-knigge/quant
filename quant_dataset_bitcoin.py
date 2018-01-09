@@ -13,13 +13,14 @@ class QuantDatasetBitcoin:
     # instantiate vars
     day = 86400
     now = round(time.time())
-    dataset = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC.csv"
+    dataset_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC.csv"
+    indicators = ['macd','macds','macdh','rsi_14']
 
     # create dataset
-    def __init__(self, currency = "BTC", dataset = dataset, override=False):
+    def __init__(self, currency = "BTC", dataset_path = dataset_path, override=False):
         self.override = override
-        self.dataset = self.getdataset(currency, dataset)
-        self.stockdataset = Sdf.retype(self.dataset.copy(deep=True))
+        self.dataset = self.getdataset(currency, dataset_path)
+        self.augmented_dataset = self.augmentdataset()
 
 
     # retrieve data from cmc
@@ -49,27 +50,27 @@ class QuantDatasetBitcoin:
         # clean data and retype
         data = self.cleandata(np.array(matrix).astype(np.float))
         # save to csv
+
         self.tocsv(data, currency, headers)
         return pd.DataFrame(data, columns=headers)
 
     # check whether a dataset is saved in given directory, else pull fresh data
-    def getdataset(self, currency, dataset):
-        if dataset and not self.override:
-            if(os.path.isfile(dataset)):
-                return self.fromcsv(dataset)
+    def getdataset(self, currency, dataset_path):
+        if dataset_path and not self.override:
+            if(os.path.isfile(dataset_path)):
+                return self.fromcsv(dataset_path)
         return self.pulldata(currency)
 
     # get data from csv file
-    def fromcsv(self, dataset):
-        return pd.read_csv(dataset)
+    def fromcsv(self, dataset_path):
+        return pd.read_csv(dataset_path)
 
     # save data to csv file
     def tocsv(self, dataset, currency, headers):
-        fname = os.path.dirname(os.path.abspath(__file__)) + "/datasets/" + currency + ".csv"
+        fname = "datasets/" + currency + ".csv"
         open(fname, 'a').close()
         fmt='%s, %s, %s, %s, %s, %s, %s'
         np.savetxt(fname, dataset, fmt=fmt, header=",".join(headers))
-        return "asdf"
 
     # remove all rows that have nan values (~may 2013 - aug 2013)
     def cleandata(self, dirty):
@@ -84,4 +85,11 @@ class QuantDatasetBitcoin:
         ax1.set_xlabel('time (UNIX)')
         ax2.plot(self.dataset['# Date'], self.dataset['Volume'], color='orange')
         plt.show()
-        pass
+
+    # append indicators to the dataset
+    def augmentdataset(self):
+        stockdataset = Sdf.retype(self.dataset.copy(deep=True))
+        augmented_dataset = self.dataset.copy(deep=True)
+        for indicator in self.indicators:
+            augmented_dataset[indicator] = stockdataset[indicator]
+        return augmented_dataset
