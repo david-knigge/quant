@@ -38,8 +38,7 @@ class QuantDatasetBitcoin:
         if dataset and not self.override:
             if(os.path.isfile(dataset)):
                 return self.fromcsv(dataset)
-        else:
-            return self.pulldata(currency)
+        return self.pulldata(currency)
 
     def fromcsv(self, dataset):
         return np.loadtxt(dataset, delimiter=",")
