@@ -44,7 +44,7 @@ class QuantDatasetBitcoin:
         return np.loadtxt(dataset, delimiter=",")
 
     def tocsv(self, dataset, currency, headers):
-        fname = os.path.dirname(os.path.abspath(__file__)) + "\\datasets\\" + currency + ".csv"
+        fname = os.path.dirname(os.path.abspath(__file__)) + "/datasets/" + currency + ".csv"
         open(fname, 'a').close()
         fmt='%s, %s, %s, %s, %s, %s, %s'
         np.savetxt(fname, dataset, fmt=fmt, header=",".join(headers))
