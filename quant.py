@@ -8,6 +8,7 @@ class Quant:
             currency=args.get('currency'),
             override=args.get('override')
         )
+        print(self.ds.dataset)
 
 if __name__ == '__main__':
     import os

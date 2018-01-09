@@ -4,16 +4,21 @@ import requests
 import os.path
 from bs4 import BeautifulSoup
 
+# create / load bitcoin dataset
 class QuantDatasetBitcoin:
 
+    # instantiate vars
     day = 86400
     now = round(time.time())
-    dataset = os.path.dirname(os.path.abspath(__file__)) + "\\datasets\\BTC.csv"
+    dataset = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC.csv"
 
+    # create dataset
     def __init__(self, currency = "BTC", dataset = dataset, override=False):
         self.override = override
-        self.dataset = self.getdataset(currency, dataset)
+        dirtydataset = self.getdataset(currency, dataset)
+        self.dataset = self.cleandata(dirtydataset)
 
+    # retrieve data from cmc
     def pulldata(self, currency):
         training_data = []
         timestamp = self.now
@@ -29,10 +34,17 @@ class QuantDatasetBitcoin:
             matrix = [[entry.string.replace(",","") for entry in row] for row in columns]
             for row in matrix:
                 row[0] = round(time.mktime(datetime.datetime.strptime(row[0], "%b %d %Y").timetuple()))
+        else:
+            sys.exit("CMC Unavailable")
 
-        data = np.array(matrix)
+        for rindex, row in enumerate(matrix):
+            for cindex, entry in enumerate(row):
+                if entry == "-":
+                    matrix[rindex][cindex] = "nan"
+
+        data = np.array(matrix).astype(np.float)
         self.tocsv(data, currency, headers)
-        return np.array(matrix)
+        return data
 
     def getdataset(self, currency, dataset):
         if dataset and not self.override:
@@ -41,7 +53,7 @@ class QuantDatasetBitcoin:
         return self.pulldata(currency)
 
     def fromcsv(self, dataset):
-        return np.loadtxt(dataset, delimiter=",")
+        return np.genfromtxt(dataset, dtype=float, delimiter=",", deletechars='-')
 
     def tocsv(self, dataset, currency, headers):
         fname = os.path.dirname(os.path.abspath(__file__)) + "/datasets/" + currency + ".csv"
@@ -49,3 +61,6 @@ class QuantDatasetBitcoin:
         fmt='%s, %s, %s, %s, %s, %s, %s'
         np.savetxt(fname, dataset, fmt=fmt, header=",".join(headers))
         return "asdf"
+
+    def cleandata(self, dirty):
+        return dirty[~np.isnan(dirty).any(axis=1)]
