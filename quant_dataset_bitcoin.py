@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 import pandas as pd
 from stockstats import StockDataFrame as Sdf
+from quant_google_trends import QuantGoogleTrends
 
 # create / load bitcoin dataset
 class QuantDatasetBitcoin:
@@ -20,12 +21,14 @@ class QuantDatasetBitcoin:
     def __init__(self, currency = "BTC", dataset_path = dataset_path, override=False):
         self.override = override
         self.dataset = self.getdataset(currency, dataset_path)
+        #self.target = self.gettargetdata()
 
     #
     def getdataset(self, currency, dataset_path):
-        stockdataset = self.getstockdataset(currency, dataset_path)
-        augmented_stockdataset = self.augmentstockdataset(stockdataset)
-        
+        self.stockdataset = self.getstockdataset(currency, dataset_path)
+        self.augmented_stockdataset = self.augmentstockdataset(stockdataset)
+        #gtrends = QuantGoogleTrends()
+        #gtrends_augmented_stockdataset = gtrends.gettrends()
         pass
 
 
