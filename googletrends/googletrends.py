@@ -53,7 +53,7 @@ def daterange(date1, date2):
         dates.append(date1 + timedelta(n))
     return dates
 
-dates = daterange(date(2013, 1, 13), date(2018, 1, 8))
+dates = daterange(date(2013, 1, 13), date(2018, 1, 9))
 dates_day = [(pd.to_datetime(str(d))).strftime('%Y.%m.%d') for d in dates]
 
 # Final dataframe

@@ -25,23 +25,28 @@ class QuantDatasetBitcoin:
 
     #
     def getdataset(self, currency, dataset_path):
+        # add stock data
         stockdataset = self.getstockdataset(currency, dataset_path)
         self.augmented_stockdataset = self.augmentstockdataset(stockdataset)
 
+        # add google trends data
         gtrends = QuantGoogleTrends()
         gtrends_dated = gtrends.gettrends([
-            self.stockdataset['# Date'].iloc[0],
-            self.stockdataset['# Date'].iloc[-1]
+            stockdataset['Date'].iloc[0],
+            stockdataset['Date'].iloc[-1]
         ])
+        gtrends_stockdata = self.augmented_stockdataset.copy(deep=True)
+        gtrends_stockdata['gtrends'] = gtrends_dated.values
 
-        pass
+        self.tocsv(gtrends_stockdata, 'BTC-ind-trends')
+        return gtrends_stockdata
 
 
     # retrieve data from cmc
     def pullstockdata(self, currency):
         training_data = []
         timestamp = self.now
-        r = requests.get('https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=20130428&end=20180109')
+        r = requests.get('https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=20130428&end=20180108')
         if r.status_code == requests.codes.ok:
             soup = BeautifulSoup(r.content, 'lxml')
             table = soup.find_all('table')[0]
@@ -65,8 +70,9 @@ class QuantDatasetBitcoin:
         data = self.cleandata(np.array(matrix).astype(np.float))
         # save to csv
 
-        self.tocsv(data, currency, headers)
-        return pd.DataFrame(data, columns=headers)
+        dfdata = pd.DataFrame(data, columns=headers)
+        self.tocsv(dfdata, currency)
+        return dfdata
 
     # check whether a dataset is saved in given directory, else pull fresh data
     def getstockdataset(self, currency, dataset_path):
@@ -80,11 +86,12 @@ class QuantDatasetBitcoin:
         return pd.read_csv(dataset_path)
 
     # save data to csv file
-    def tocsv(self, dataset, currency, headers):
+    def tocsv(self, dataset, currency):
         fname = "datasets/" + currency + ".csv"
         open(fname, 'a').close()
-        fmt='%s, %s, %s, %s, %s, %s, %s'
-        np.savetxt(fname, dataset, fmt=fmt, header=",".join(headers))
+        #fmt='%s, %s, %s, %s, %s, %s, %s'
+        dataset.to_csv(fname)
+        #np.savetxt(fname, dataset, fmt=fmt, header=",".join(headers))
 
     # remove all rows that have nan values (~may 2013 - aug 2013)
     def cleandata(self, dirty):
@@ -104,8 +111,9 @@ class QuantDatasetBitcoin:
     def augmentstockdataset(self, dataset):
         stockdataset = Sdf.retype(dataset.copy(deep=True))
         augmented_dataset = dataset.copy(deep=True)
+
         for indicator in self.indicators:
-            augmented_dataset[indicator] = stockdataset[indicator]
+            augmented_dataset[indicator] = stockdataset[indicator].values
         return augmented_dataset
 
 
