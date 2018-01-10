@@ -25,10 +25,15 @@ class QuantDatasetBitcoin:
 
     #
     def getdataset(self, currency, dataset_path):
-        self.stockdataset = self.getstockdataset(currency, dataset_path)
+        stockdataset = self.getstockdataset(currency, dataset_path)
         self.augmented_stockdataset = self.augmentstockdataset(stockdataset)
-        #gtrends = QuantGoogleTrends()
-        #gtrends_augmented_stockdataset = gtrends.gettrends()
+
+        gtrends = QuantGoogleTrends()
+        gtrends_dated = gtrends.gettrends([
+            self.stockdataset['# Date'].iloc[0],
+            self.stockdataset['# Date'].iloc[-1]
+        ])
+
         pass
 
 
