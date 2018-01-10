@@ -3,20 +3,17 @@ from quant_dataset_bitcoin import QuantDatasetBitcoin
 class Quant:
 
     def __init__(self, args):
-        self.ds = QuantDatasetBitcoin(
+        self.dataset = QuantDatasetBitcoin(
             dataset_path=args.get('dataset'),
             currency=args.get('currency'),
             override=args.get('override')
         )
 
         if args.get('plot'):
-            self.ds.plot()
+            self.dataset.plot()
 
     def getdataset(self, augmented=True):
-        if augmented:
-            return self.ds.augmented_dataset
-        else:
-            return self.ds.dataset
+        return self.dataset.dataset
 
 if __name__ == '__main__':
     import os
