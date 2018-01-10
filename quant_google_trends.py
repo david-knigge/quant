@@ -11,7 +11,7 @@ class QuantGoogleTrends:
         self.trendmatrix = self.gettrendmatrix()
 
 
-    def trendmatrix(self):
+    def gettrendmatrix(self):
         # API for the bitcoin interest
         pytrends = TrendReq(hl='en-US', tz=360)
         kw_list = ["Bitcoin"]
