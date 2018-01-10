@@ -20,11 +20,17 @@ class QuantDatasetBitcoin:
     def __init__(self, currency = "BTC", dataset_path = dataset_path, override=False):
         self.override = override
         self.dataset = self.getdataset(currency, dataset_path)
-        self.augmented_dataset = self.augmentdataset()
+
+    #
+    def getdataset(self, currency, dataset_path):
+        stockdataset = self.getstockdataset(currency, dataset_path)
+        augmented_stockdataset = self.augmentstockdataset(stockdataset)
+        
+        pass
 
 
     # retrieve data from cmc
-    def pulldata(self, currency):
+    def pullstockdata(self, currency):
         training_data = []
         timestamp = self.now
         r = requests.get('https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=20130428&end=20180109')
@@ -55,11 +61,11 @@ class QuantDatasetBitcoin:
         return pd.DataFrame(data, columns=headers)
 
     # check whether a dataset is saved in given directory, else pull fresh data
-    def getdataset(self, currency, dataset_path):
+    def getstockdataset(self, currency, dataset_path):
         if dataset_path and not self.override:
             if(os.path.isfile(dataset_path)):
                 return self.fromcsv(dataset_path)
-        return self.pulldata(currency)
+        return self.pullstockdata(currency)
 
     # get data from csv file
     def fromcsv(self, dataset_path):
@@ -87,9 +93,15 @@ class QuantDatasetBitcoin:
         plt.show()
 
     # append indicators to the dataset
-    def augmentdataset(self):
-        stockdataset = Sdf.retype(self.dataset.copy(deep=True))
-        augmented_dataset = self.dataset.copy(deep=True)
+    def augmentstockdataset(self, dataset):
+        stockdataset = Sdf.retype(dataset.copy(deep=True))
+        augmented_dataset = dataset.copy(deep=True)
         for indicator in self.indicators:
             augmented_dataset[indicator] = stockdataset[indicator]
         return augmented_dataset
+
+
+    def gettargetdata(self):
+
+
+        pass
