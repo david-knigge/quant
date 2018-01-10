@@ -7,7 +7,7 @@ from pytrends.request import TrendReq
 class QuantGoogleTrends:
 
     # constructs a dataset
-    def __init__(self, timeframe):
+    def __init__(self):
         self.trendmatrix = self.gettrendmatrix()
 
 
