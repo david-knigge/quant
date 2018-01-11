@@ -4,7 +4,7 @@ from quant_model import QuantModel
 class Quant:
 
     def __init__(self, args):
-        self.dataset = QuantDatasetBitcoin(
+        self.QuantDataset = QuantDatasetBitcoin(
             dataset_path=args.get('dataset'),
             currency=args.get('currency'),
             override=args.get('override')
@@ -18,7 +18,10 @@ class Quant:
 
 
     def getdataset(self, augmented=True):
-        return self.dataset.dataset
+        return self.QuantDataset.dataset
+
+    def gettarget(self):
+        return self.QuantDataset.target
 
 if __name__ == '__main__':
     import os
