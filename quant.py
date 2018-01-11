@@ -10,7 +10,7 @@ class Quant:
         )
 
         if args.get('plot'):
-            self.dataset.plot()
+            self.QuantDataset.plot()
 
     def getdataset(self, augmented=True):
         return self.QuantDataset.dataset

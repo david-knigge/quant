@@ -18,13 +18,15 @@ class QuantDatasetBitcoin:
     day = 86400
     now = round(time.time())
     dataset_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC-ind-trends.csv"
+    target_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/targets.csv"
     indicators = ['macd','macds','macdh','rsi_14']
+    thresholds = [-3, 3]
 
     # create dataset
     def __init__(self, currency = "BTC", dataset_path = dataset_path, override=False):
         self.override = override
         self.dataset = self.getdataset(currency, dataset_path)
-        self.target = self.gettargetdata(thresholds = [-5, 5])
+        self.target = self.gettargetdata(thresholds = self.thresholds)
 
     #
     def gettrenddataset(self, currency):
@@ -101,10 +103,16 @@ class QuantDatasetBitcoin:
     def plot(self):
         fig, ax1 = plt.subplots()
         ax2 = ax1.twinx()
+        ax3 = ax1.twinx()
 
-        ax1.plot(self.dataset['# Date'], self.dataset['Open'])
+        dates = []
+        for date in self.dataset['Date']:
+            dates.append(datetime.datetime.fromtimestamp(date))
+
         ax1.set_xlabel('time (UNIX)')
-        ax2.plot(self.dataset['# Date'], self.dataset['Volume'], color='orange')
+        ax1.plot_date(dates, self.target['Target'], color='red')
+        ax2.plot_date(dates, self.dataset['Volume'], '-', color='orange',)
+        ax3.plot_date(dates, self.dataset['Close'], '-')
         plt.show()
 
     # append indicators to the dataset
@@ -116,37 +124,29 @@ class QuantDatasetBitcoin:
             augmented_dataset[indicator] = stockdataset[indicator].values
         return augmented_dataset
 
-
+    # get target data values from file or calculate them
     def gettargetdata(self, thresholds):
-        dataset = self.dataset.copy(deep=True)
-        target_values = []
-        raw_target_values = []
-        for index, sample in dataset.iloc[1:].iterrows():
-            abschange = ((dataset.iloc[index - 1]['Close'] - sample['Close']) / sample['Close']) * 100
-            # raw_target_values.append(abschange)
-            change = self.hround(abschange)
-            if change >= thresholds[1]:
-                target_values.append(1)
-            elif change <= thresholds[0]:
-                target_values.append(-1)
-            else:
-                target_values.append(0)
+        if (not self.override) and os.path.isfile(self.target_path):
+            return self.fromcsv(self.target_path)
+        else:
+            dataset = self.dataset.copy(deep=True)
+            target_values = []
+            raw_target_values = []
+            for index, sample in dataset.iloc[:-1].iterrows():
+                abschange = ((dataset.iloc[index + 1]['Close'] - sample['Close']) / sample['Close']) * 100
+                change = self.hround(abschange)
+                if change >= thresholds[1]:
+                    target_values.append(1)
+                elif change <= thresholds[0]:
+                    target_values.append(-1)
+                else:
+                    target_values.append(0)
 
-        # counts = Counter(target_values)
-        # print("avg 24h % change: ", sum(raw_target_values) / len(raw_target_values))
-        # c = counts.most_common()
-        # c = sorted(c, key=lambda x: x[0], reverse=True)
-        # x, y = [], []
-        # for ind, i in enumerate(c):
-        #     x.append(i[0])
-        #     y.append(i[1])
-        # plt.plot(x, y, 'o')
-        # plt.title("24h price change")
-        # plt.ylabel("# of occurences")
-        # plt.xlabel("% change")
-        # plt.show()
-        # print("24h % change counts: ", counts.most_common())
-        return pd.Series(target_values)
+            # to compensate for last matrix value missing
+            target_values.append(0)
+            target = pd.DataFrame(pd.Series(target_values), columns=['Target'])
+            self.tocsv(target, 'targets')
+            return target
 
     def hround(self, x, base=1):
         return int(base * round(float(x)/base))
