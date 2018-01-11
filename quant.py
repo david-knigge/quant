@@ -11,7 +11,7 @@ class Quant:
         )
 
         if args.get('plot'):
-            self.dataset.plot()
+            self.QuantDataset.plot()
 
         self.target = None
         self.neural_net = QuantNeuralNetwork(self.dataset, self.target):
