@@ -1,4 +1,5 @@
 from quant_dataset_bitcoin import QuantDatasetBitcoin
+from quant_model import QuantModel
 
 class Quant:
 
@@ -12,6 +13,8 @@ class Quant:
         if args.get('plot'):
 
             self.QuantDataset.plot()
+
+        neural_net = QuantModel.Linear_regression_model(self.getdataset(), self.gettarget())
 
     def getdataset(self, augmented=True):
         return self.QuantDataset.dataset

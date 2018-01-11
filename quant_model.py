@@ -36,8 +36,14 @@ class QuantModel:
 
     def Linear_regression_model(input_values, expected_values):
         # linear regression model saven in body_regression
+        print(input_values.size)
+        print(input_values['Open'].reshape(-1,1).shape)
+        print(expected_values.size)
+        print(expected_values['Target'].shape)
+        print(len(expected_values['Target'].values))
         body_regression = linear_model.LinearRegression()
-        body_regression.fit(input_values, expected_values)
+        print(input_values)
+        body_regression.fit(input_values.loc['Open','Close','Volume'].as_matrix(), np.asarray(expected_values['Target'].as_matrix()).reshape(-1,1))
 
 
         plt.scatter(input_values, expected_values)
