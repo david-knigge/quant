@@ -11,6 +11,7 @@ class Quant:
         )
 
         if args.get('plot'):
+
             self.QuantDataset.plot()
 
         self.target = None
