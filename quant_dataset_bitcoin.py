@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from stockstats import StockDataFrame as Sdf
 from quant_google_trends import QuantGoogleTrends
+from collections import Counter
+
+pd.options.mode.chained_assignment = None  # default='warn'
 
 # create / load bitcoin dataset
 class QuantDatasetBitcoin:
@@ -14,26 +17,26 @@ class QuantDatasetBitcoin:
     # instantiate vars
     day = 86400
     now = round(time.time())
-    dataset_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC.csv"
+    dataset_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC-ind-trends.csv"
     indicators = ['macd','macds','macdh','rsi_14']
 
     # create dataset
     def __init__(self, currency = "BTC", dataset_path = dataset_path, override=False):
         self.override = override
         self.dataset = self.getdataset(currency, dataset_path)
-        #self.target = self.gettargetdata()
+        self.target = self.gettargetdata(thresholds = [-5, 5])
 
     #
-    def getdataset(self, currency, dataset_path):
+    def gettrenddataset(self, currency):
         # add stock data
-        stockdataset = self.getstockdataset(currency, dataset_path)
+        stockdataset = self.pullstockdata(currency)
         self.augmented_stockdataset = self.augmentstockdataset(stockdataset)
 
         # add google trends data
         gtrends = QuantGoogleTrends()
         gtrends_dated = gtrends.gettrends([
-            stockdataset['Date'].iloc[0],
-            stockdataset['Date'].iloc[-1]
+            stockdataset['Date'].iloc[-1],
+            stockdataset['Date'].iloc[0]
         ])
         gtrends_stockdata = self.augmented_stockdataset.copy(deep=True)
         gtrends_stockdata['gtrends'] = gtrends_dated.values
@@ -70,16 +73,15 @@ class QuantDatasetBitcoin:
         data = self.cleandata(np.array(matrix).astype(np.float))
         # save to csv
 
-        dfdata = pd.DataFrame(data, columns=headers)
-        self.tocsv(dfdata, currency)
+        dfdata = pd.DataFrame(data[::-1], columns=headers)
         return dfdata
 
     # check whether a dataset is saved in given directory, else pull fresh data
-    def getstockdataset(self, currency, dataset_path):
+    def getdataset(self, currency, dataset_path):
         if dataset_path and not self.override:
             if(os.path.isfile(dataset_path)):
                 return self.fromcsv(dataset_path)
-        return self.pullstockdata(currency)
+        return self.gettrenddataset(currency)
 
     # get data from csv file
     def fromcsv(self, dataset_path):
@@ -89,9 +91,7 @@ class QuantDatasetBitcoin:
     def tocsv(self, dataset, currency):
         fname = "datasets/" + currency + ".csv"
         open(fname, 'a').close()
-        #fmt='%s, %s, %s, %s, %s, %s, %s'
         dataset.to_csv(fname)
-        #np.savetxt(fname, dataset, fmt=fmt, header=",".join(headers))
 
     # remove all rows that have nan values (~may 2013 - aug 2013)
     def cleandata(self, dirty):
@@ -117,7 +117,36 @@ class QuantDatasetBitcoin:
         return augmented_dataset
 
 
-    def gettargetdata(self):
+    def gettargetdata(self, thresholds):
+        dataset = self.dataset.copy(deep=True)
+        target_values = []
+        raw_target_values = []
+        for index, sample in dataset.iloc[1:].iterrows():
+            abschange = ((dataset.iloc[index - 1]['Close'] - sample['Close']) / sample['Close']) * 100
+            # raw_target_values.append(abschange)
+            change = self.hround(abschange)
+            if change >= thresholds[1]:
+                target_values.append(1)
+            elif change <= thresholds[0]:
+                target_values.append(-1)
+            else:
+                target_values.append(0)
 
+        # counts = Counter(target_values)
+        # print("avg 24h % change: ", sum(raw_target_values) / len(raw_target_values))
+        # c = counts.most_common()
+        # c = sorted(c, key=lambda x: x[0], reverse=True)
+        # x, y = [], []
+        # for ind, i in enumerate(c):
+        #     x.append(i[0])
+        #     y.append(i[1])
+        # plt.plot(x, y, 'o')
+        # plt.title("24h price change")
+        # plt.ylabel("# of occurences")
+        # plt.xlabel("% change")
+        # plt.show()
+        # print("24h % change counts: ", counts.most_common())
+        return pd.Series(target_values)
 
-        pass
+    def hround(self, x, base=1):
+        return int(base * round(float(x)/base))
