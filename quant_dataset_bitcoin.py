@@ -132,9 +132,12 @@ class QuantDatasetBitcoin:
             dataset = self.dataset.copy(deep=True)
             target_values = []
             raw_target_values = []
+            raw_target_values_48h = []
             for index, sample in dataset.iloc[:-1].iterrows():
                 abschange = ((dataset.iloc[index + 1]['Close'] - sample['Close']) / sample['Close']) * 100
+                abschange48h = ((dataset.iloc[index + 1]['Close'] - sample['Close']) / sample['Close']) * 100
                 change = self.hround(abschange)
+                raw_target_values.append(abschange)
                 if change >= thresholds[1]:
                     target_values.append(1)
                 elif change <= thresholds[0]:
@@ -144,7 +147,9 @@ class QuantDatasetBitcoin:
 
             # to compensate for last matrix value missing
             target_values.append(0)
+            raw_target_values.append(0)
             target = pd.DataFrame(pd.Series(target_values), columns=['Target'])
+            target['Change 24h'] = pd.Series(raw_target_values)
             self.tocsv(target, 'targets')
             return target
 
