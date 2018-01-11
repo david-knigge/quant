@@ -4,25 +4,21 @@ from quant_model import QuantModel
 class Quant:
 
     def __init__(self, args):
-        self.QuantDataset = QuantDatasetBitcoin(
+        self.dataset = QuantDatasetBitcoin(
             dataset_path=args.get('dataset'),
             currency=args.get('currency'),
             override=args.get('override')
         )
 
         if args.get('plot'):
-
-            self.QuantDataset.plot()
+            self.dataset.plot()
 
         self.target = None
         self.neural_net = QuantNeuralNetwork(self.dataset, self.target):
 
 
     def getdataset(self, augmented=True):
-        return self.QuantDataset.dataset
-
-    def gettarget(self):
-        return self.QuantDataset.target
+        return self.dataset.dataset
 
 if __name__ == '__main__':
     import os
