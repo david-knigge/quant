@@ -20,7 +20,7 @@ class QuantDatasetBitcoin:
     dataset_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC-ind-trends.csv"
     target_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/targets.csv"
     indicators = ['macd','macds','macdh','rsi_14']
-    thresholds = [-3, 3]
+    thresholds = [-5, 5]
 
     # create dataset
     def __init__(self, currency = "BTC", dataset_path = dataset_path, override=False):
