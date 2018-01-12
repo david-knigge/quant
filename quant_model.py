@@ -42,10 +42,18 @@ class QuantModel:
         dates = input_values['Date']
         input_values = input_values.reindex(columns=['Close', 'macd', 'macds', 'macdh'])
 
-        body_regression.fit(dates.values.reshape(1474,1), np.array(expected_values['Change 24h'].values.reshape(1474,1)))
+        body_regression.fit(input_values[50:], np.array(expected_values['Change 24h'].values.reshape(1474,1)[50:]))
 
 
         #plt.scatter(input_values, np.asarray(expected_values['Target']).reshape(1474,1))
+        # print("The values: ")
+        # print(dates.values.reshape(1474,1)[50:])
+        # print("The values: ")
+        # print(input_values[50:])
+        # print("The shape: ")
+        # print(dates.values.reshape(1474,1)[50:].shape)
+        # print("The shape: ")
+        # print(input_values[50:].shape)
         plt.plot(dates.values.reshape(1474,1)[50:], body_regression.predict(input_values[50:]))
         plt.show()
         return plt
