@@ -34,13 +34,13 @@ def clean(tweet):
 def process_tweets():
     startTime = datetime.now()
     tweets = []
-    with open('datasets/tweets_raw.txt', 'r') as raw:
+    with open('datasets/tweets_raw.txt', 'r',encoding="utf8") as raw:
         for tweet in raw:
             tweetdate, tweetcontent = clean(tweet)
             if tweetdate != 'invalid':
                 tweets.append((tweetdate, tweetcontent))
     twittermatrix = np.array(['date', 'content', 'sentiment'])
-    for tweet in tweets[:1000]:
+    for tweet in tweets:
         try:
             sentiment = calculate_sentiment(tweet[1])
             if ((sentiment < 1) and (sentiment > -1)) and (tweet[1] != ''):
