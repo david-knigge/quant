@@ -36,13 +36,11 @@ class QuantModel:
 
     def Linear_regression_model(input_values, expected_values):
         # linear regression model saven in body_regression
-        print(np.asarray(expected_values['Target']).reshape(1474,1).size)
-        print(input_values['Open'].reshape(1474,1).size)
         body_regression = linear_model.LinearRegression()
-        print(input_values.keys())
-        input_values = input_values.reindex(columns=['Date', 'Close', 'macd', 'macds', 'macdh'])
+        dates = input_values['Date']
+        input_values = input_values.reindex(columns=['Close', 'macd', 'macds', 'macdh'])
 
-        body_regression.fit(input_values.values, np.array(expected_values['Change 24h'].values.reshape(1474,1)))
+        body_regression.fit(dates.values, np.array(expected_values['Change 24h'].values.reshape(1474,1)))
 
 
         #plt.scatter(input_values, np.asarray(expected_values['Target']).reshape(1474,1))
