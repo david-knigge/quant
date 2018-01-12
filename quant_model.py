@@ -13,10 +13,11 @@ class QuantModel:
             self.model = "LinearRegression"
         elif modeltype == "neurnet":
             self.model = "NeuralNetwork"
-            random.seed(1)
+            net = tf.input_data([1714,1714])
+            """random.seed(1)
 
             self.synaptic_weights = 2 * random.random((features, 1)) - 1
-
+"""
     def sigmoid(self, x):
         return 1/(1+ exp(-x))
 
@@ -38,15 +39,14 @@ class QuantModel:
     def Linear_regression_model(input_values, expected_values):
         # linear regression model saven in body_regression
         body_regression = linear_model.LinearRegression()
-        dates = input_values['Date'].values
+        dates = input_values['Date']
         input_values = input_values.reindex(columns=['Close', 'macd', 'macds', 'macdh'])
 
-        body_regression.fit(input_values.values, np.array(expected_values['Change 24h'].values.reshape(1474,1)))
+        body_regression.fit(dates.values.reshape(1474,1), np.array(expected_values['Change 24h'].values.reshape(1474,1)))
 
-        print(dates)
 
         #plt.scatter(input_values, np.asarray(expected_values['Target']).reshape(1474,1))
-        plt.plot(dates.reshape(1474,1)[50:], body_regression.predict(input_values[50:]))
+        plt.plot(dates['Date'].values.reshape(1474,1)[50:], body_regression.predict(input_values[50:]))
         plt.show()
         return plt
 """
