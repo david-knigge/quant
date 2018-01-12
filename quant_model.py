@@ -45,7 +45,7 @@ class QuantModel:
 
 
         #plt.scatter(input_values, np.asarray(expected_values['Target']).reshape(1474,1))
-        plt.plot(dates.values.reshape(1474,1)['Date'][50:], body_regression.predict(input_values[50:]))
+        plt.plot(dates['Date'].values.reshape(1474,1)[50:], body_regression.predict(input_values[50:]))
         plt.show()
         return plt
 """
