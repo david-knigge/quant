@@ -31,7 +31,7 @@ if __name__ == '__main__':
     import argparse
     p = argparse.ArgumentParser()
     p.add_argument('--override', help='force pull fresh data', action='store_true')
-    p.add_argument('--dataset', help='specify dataset path', default=os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC.csv")
+    p.add_argument('--dataset', help='specify dataset path', default=os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC-ind-trends.csv")
     p.add_argument('--currency', help='specify training data currency', default="BTC")
     p.add_argument('--plot', help='plot data', action="store_true")
     args = p.parse_args()

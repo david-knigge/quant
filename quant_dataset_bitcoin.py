@@ -73,9 +73,27 @@ class QuantDatasetBitcoin:
 
         # clean data and retype
         data = self.cleandata(np.array(matrix).astype(np.float))
-        # save to csv
-
         dfdata = pd.DataFrame(data[::-1], columns=headers)
+
+        # add price percentage change values
+        raw_change_values = [0]
+        for index, sample in dfdata.iloc[1:].iterrows():
+            abschange = ((sample['Close'] - dfdata.iloc[index - 1]['Close']) / dfdata.iloc[index - 1]['Close']) * 100
+            change = self.hround(abschange)
+            raw_change_values.append(abschange)
+
+        # to compensate for last matrix value missing
+        raw_change_values.append(0)
+        raw_change_values.append(0)
+
+        raw_volume_changes_values = [0]
+        for index, sample in dfdata.iloc[1:].iterrows():
+            abschange = ((sample['Volume'] - dfdata.iloc[index - 1]['Volume']) / dfdata.iloc[index - 1]['Volume']) * 100
+            change = self.hround(abschange)
+            raw_volume_changes_values.append(abschange)
+
+        dfdata['Price % 24h'] = pd.Series(raw_change_values)
+        dfdata['Volume % 24h'] = pd.Series(raw_volume_changes_values)
         return dfdata
 
     # check whether a dataset is saved in given directory, else pull fresh data
