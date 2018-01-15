@@ -25,14 +25,11 @@ def clean(tweet):
             tweetdate = 'invalid'
 
     tweetcontent = split[1]
-    tweetcontent = re.sub(r'^https?:\/\/.*[\r\n]*', '', tweetcontent, flags=re.MULTILINE)
-    tweetcontent = ''.join(filter(lambda x: x in string.printable, tweetcontent))  # filter non-ascii characers
-    tweetcontent = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ", tweetcontent).split())
+    tweetcontent = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|(RT)", " ", tweetcontent).split())
 
     return tweetdate, tweetcontent
 
 def process_tweets():
-    startTime = datetime.now()
     tweets = []
     with open('datasets/tweets_raw.txt', 'r',encoding="utf8") as raw:
         for tweet in raw:
@@ -40,8 +37,16 @@ def process_tweets():
             if tweetdate != 'invalid':
                 tweets.append((tweetdate, tweetcontent))
     twittermatrix = np.array(['date', 'content', 'sentiment'])
+    startTime = datetime.now()
+    for tweet in tweets[:1000000]:
+        try:
+            sentiment = calculate_sentiment(tweet[1])
+            if ((sentiment < 1) and (sentiment > -1)) and (tweet[1] != ''):
+                twittermatrix = np.vstack([twittermatrix, [tweet[0], tweet[1], sentiment]])
+        except Exception as e:
+            pass
+    print(datetime.now() - startTime)
     print("done cleaning tweets")
-
     with open("datasets/tweets_clean.csv", 'wb') as processed:
         np.savetxt(processed, tweets, fmt='%s', delimiter=',')
     print(datetime.now() - startTime)
