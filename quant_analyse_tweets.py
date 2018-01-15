@@ -100,6 +100,6 @@ def group_tweets():
 
 
 #process_tweets()
-sentiment_tweets()
+#sentiment_tweets()
 #processedfile = open('datasets/tweets_processed.txt', 'r')
 #print(processedfile.readline(2))
