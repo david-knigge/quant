@@ -76,6 +76,27 @@ def sentiment_tweets():
         np.savetxt(processed, twittermatrix, fmt='%s', delimiter=',')
     print(datetime.now() - startTime)
 
+def group_tweets():
+    startTime = datetime.now()
+    latest_time = datetime.now()
+
+    count = 0
+
+    twittermatrix = []
+    with open("datasets/tweets_sentiment.csv", 'r') as tweets:
+        day = tweets[0].split(',')[0]
+
+        for tweet in tweets:
+            tweet = tweet.split(',')
+            if count == 0:
+                day = tweet[0]
+
+            count += 1
+            if count % 100 == 0:
+                print(count)
+                print(datetime.now() - latest_time)
+                latest_time = datetime.now()
+
 
 
 #process_tweets()
