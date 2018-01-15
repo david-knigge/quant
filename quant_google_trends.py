@@ -16,7 +16,7 @@ class QuantGoogleTrends:
         # API for the bitcoin interest
         pytrends = TrendReq(hl='en-US', tz=360)
         kw_list = ["Bitcoin"]
-        pytrends.build_payload(kw_list, cat=0, timeframe='today 5-y', geo='', gprop='')
+        pytrends.build_payload(kw_list, cat=0, timeframe='2013-01-09 2018-01-09', geo='', gprop='')
 
         i_df = pytrends.interest_over_time()
         interests = i_df.drop(labels='isPartial', axis=1)
