@@ -3,44 +3,27 @@ from sklearn import linear_model, model_selection
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import tflearn as tf
-
+import tensorflow
 
 class QuantModel:
 
     def __init__(self, modeltype = "linreg"):
         if modeltype == "linreg":
-            self.model = "LinearRegression"
+            self.type = "LinearRegression"
         elif modeltype == "neurnet":
-            self.model = "NeuralNetwork"
-            net = tf.input_data([1424,4])
+            self.type = "NeuralNetwork"
+            net = tf.input_data([None,4])
+            print(tensorflow.shape(net))
             net = tf.embedding(net, input_dim=1424, output_dim=128)
             net = tf.lstm(net, 128, dropout=0.8)
             net = tf.fully_connected(net, 2, activation='softmax')
             net = tf.regression(net, optimizer='adam', learning_rate=0.0001, loss='categorical_crossentropy')
 
-            model = tf.DNN(net, tensorboard_verbose=0)
-            """random.seed(1)
+            self.model = tf.DNN(net, tensorboard_verbose=0)
 
-            self.synaptic_weights = 2 * random.random((features, 1)) - 1
-"""
-    def sigmoid(self, x):
-        return 1/(1+ exp(-x))
-
-    def sigmoid_deriv(self, x):
-        return x * ( 1 - x )
-
-    def predict(self, inputs):
-        return self.sigmoid(dot(inputs, self.synaptic_weights))
-
-    def train(self, train_input, train_output, iterations):
-        for i in xrange(iterations):
-            output = self.predict(train_input, )
-
-            error = train_output - output
-            weight_update = dot(train_input.T, error * self.sigmoid_deriv(output))
-
-            self.synaptic_weights += weight_update
 
     def neural_net_train(self, input_values, expected_values):
         dates = input_values['Date'][50:]
@@ -48,8 +31,16 @@ class QuantModel:
         expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
 
         X_train, X_test, y_train, y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
+        print(X_train[:10])
+        print("")
+        print(X_test[:10])
+        print("")
+        print(y_train[:10])
+        print("")
+        print(y_test[:10])
+        print("")
 
-        model.fit(X_train, y_train, validation_set(X_test, y_test), show_metric=True)
+        self.model.fit(X_train, y_train, show_metric=True)
 
     def Linear_regression_model(input_values, expected_values):
         # linear regression model saven in body_regression
