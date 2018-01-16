@@ -42,26 +42,15 @@ class QuantModel:
 
         self.model.fit(X_train, y_train, show_metric=True)
 
-    def Linear_regression_model(input_values, expected_values):
+    def linear_regression_model(input_values, expected_values):
         # linear regression model saven in body_regression
         body_regression = linear_model.LinearRegression()
         dates = input_values['Date']
-        input_values = input_values.reindex(columns=['Close', 'macd', 'macds', 'macdh'])
-
+        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends'])
         body_regression.fit(input_values[50:], np.array(expected_values['Change 24h'].values.reshape(1474,1)[50:]))
 
-
-        #plt.scatter(input_values, np.asarray(expected_values['Target']).reshape(1474,1))
-        # print("The values: ")
-        # print(dates.values.reshape(1474,1)[50:])
-        # print("The values: ")
-        # print(input_values[50:])
-        # print("The shape: ")
-        # print(dates.values.reshape(1474,1)[50:].shape)
-        # print("The shape: ")
-        # print(input_values[50:].shape)
         plt.plot(dates.values.reshape(1474,1)[50:], body_regression.predict(input_values[50:]))
-        #plt.show()
+        plt.show()
         return plt
 """
 if __name__ = '__main__':
