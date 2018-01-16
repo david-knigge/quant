@@ -14,7 +14,7 @@ class Quant:
 
             self.QuantDataset.plot()
 
-        model = QuantModel.linear_regression_model(self.QuantDataset.dataset, self.QuantDataset.target)
+        model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet')
 
         #neural_net = QuantModel.Linear_regression_model(self.getdataset(), self.gettarget())
         #model = QuantModel("neurnet")
