@@ -27,7 +27,7 @@ class QuantModel:
             self.type = "NeuralNetwork"
             self.model = self.neural_net(input_values, expected_values, dates)
             print(self.validate_sign(self.model.predict(self.X_test), self.y_test))
-            print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [3, -3]))
+            print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3]))
 
 
             #print(tensorflow.shape(net))
@@ -96,11 +96,13 @@ class QuantModel:
 
         correct = 0
         predicted = 0
+        print(min(predictions))
+        print(max(predictions))
         for index, value in enumerate(predictions):
-            if value > thresholds[1] or value < -thresholds[0]:
+            if value > thresholds[1] or value < thresholds[0]:
                 if np.sign(value) == np.sign(targets[index]):
                     correct += 1
-                    predicted += 1
+                predicted += 1
 
         return (correct / predicted) * 100, predicted
 
