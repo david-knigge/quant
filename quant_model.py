@@ -30,18 +30,6 @@ class QuantModel:
             print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3]))
 
 
-            #print(tensorflow.shape(net))
-
-
-            #net = tf.input_data([None,4])
-            #net = tf.embedding(net, input_dim=1424, output_dim=128)
-            #net = tf.lstm(net, 128, dropout=0.8)
-            #net = tf.fully_connected(net, 2, activation='softmax')
-            #net = tf.regression(net, optimizer='adam', learning_rate=0.0001, loss='categorical_crossentropy')
-
-            #self.model = tf.DNN(net, tensorboard_verbose=0)
-
-
     def neural_net(self, input_values, expected_values, dates):
         model = Sequential()
 
@@ -50,22 +38,19 @@ class QuantModel:
         input_values = input_values.reshape((input_values.shape[0], 1, input_values.shape[1]))
 
         model.add(LSTM(
-            50,
+            500,
             input_shape=(self.X_train.shape[1], self.X_train.shape[2])
         ))
         model.add(Dense(1))
-        model.compile(loss='mse', optimizer='adam')
+        model.compile(loss='mse', optimizer='Nadam') # Nadam is heel bueno
 
 
-        history = model.fit(self.X_train, self.y_train, epochs=10, batch_size=10, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
+        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=1, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
 
         return model
         # plt.plot(dates, expected_values)
         # plt.plot(dates, model.predict(input_values))
-        # plt.legend()
         # plt.show()
-
-        # self.model.fit(X_train, y_train, show_metric=True)
 
     def linear_regression_model(input_values, expected_values, dates111):
         # linear regression model saven in body_regression
