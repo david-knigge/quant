@@ -6,6 +6,8 @@ import requests
 import csv
 import json
 import numpy as np
+import numbers
+import pandas as pd
 from datetime import datetime
 from textblob import TextBlob
 from datetime import datetime
@@ -14,7 +16,9 @@ def clean(tweet):
 
     split = tweet.split('||')
 
-    match = re.search(r'\d{4}-\d{2}-\d{2}', tweet)
+    tweetdate = split[2]
+
+    match = re.search(r'\d{4}-\d{2}-\d{2}', tweetdate)
     if match == None:
         tweetdate = 'invalid'
     else:
@@ -29,81 +33,60 @@ def clean(tweet):
 
     return tweetdate, tweetcontent
 
-def process_tweets():
+def clean_tweets():
     tweets = []
     with open('datasets/tweets_raw.txt', 'r',encoding="utf8") as raw:
+        counter = 0
         for tweet in raw:
+            counter += 1
             tweetdate, tweetcontent = clean(tweet)
             if tweetdate != 'invalid':
                 tweets.append((tweetdate, tweetcontent))
-    twittermatrix = np.array(['date', 'content', 'sentiment'])
-    startTime = datetime.now()
-    for tweet in tweets[:1000000]:
-        try:
-            sentiment = calculate_sentiment(tweet[1])
-            if ((sentiment < 1) and (sentiment > -1)) and (tweet[1] != ''):
-                twittermatrix = np.vstack([twittermatrix, [tweet[0], tweet[1], sentiment]])
-        except Exception as e:
-            pass
-    print(datetime.now() - startTime)
-    print("done cleaning tweets")
-    with open("datasets/tweets_clean.csv", 'wb') as processed:
-        np.savetxt(processed, tweets, fmt='%s', delimiter=',')
-    print(datetime.now() - startTime)
+    return tweets
 
 def calculate_sentiment(tweet):
     tweet = TextBlob(tweet)
     return tweet.sentiment.polarity
 
-def sentiment_tweets():
-    startTime = datetime.now()
-    latest_time = datetime.now()
-    count = 0
-
-    twittermatrix = []
-    with open("datasets/tweets_clean.csv", 'r') as tweets:
-        for tweet in tweets:
-            tweet = tweet.split(',')
-
-            count += 1
-            if count % 100 == 0:
-                print(count)
-                print(datetime.now() - latest_time)
-                latest_time = datetime.now()
-
-            try:
-                sentiment = calculate_sentiment(tweet[1])
-                if ((sentiment < 1) and (sentiment > -1)) and (tweet[1] != ''):
-                    twittermatrix.append((tweet[0], tweet[1], sentiment))
-            except Exception as e:
-                print("ERROR: "+str(e))
-    with open("datasets/tweets_sentiment.csv", 'wb') as processed:
-        np.savetxt(processed, twittermatrix, fmt='%s', delimiter=',')
-    print(datetime.now() - startTime)
-
-def group_tweets():
-    startTime = datetime.now()
-    latest_time = datetime.now()
+def sentiment_tweets(tweets):
+    print(len(tweets))
+    tweets_with_sentiment = {}
 
     count = 0
 
-    twittermatrix = []
-    with open("datasets/tweets_sentiment.csv", 'r') as tweets:
-        day = tweets[0].split(',')[0]
+    for tweet in tweets:
+        content = tweet[1]
+        date = tweet[0]
 
-        for tweet in tweets:
-            tweet = tweet.split(',')
-            if count == 0:
-                day = tweet[0]
+        count += 1
+        if count % 100 == 0:
+            print(count)
 
-            count += 1
-            if count % 100 == 0:
-                print(count)
-                print(datetime.now() - latest_time)
-                latest_time = datetime.now()
+        try:
+            sentiment = calculate_sentiment(content)
+            if ((sentiment < 1) and (sentiment > -1)) and (tweet[1] != ''):
+                if date in tweets_with_sentiment.keys():
+                    tweets_with_sentiment[date].append(sentiment)
+                else:
+                    tweets_with_sentiment[date] = [sentiment]
+        except Exception as e:
+            print("ERROR: " +str(e))
 
+    return tweets_with_sentiment
 
+def dict_day(tweets):
+    dict_day = {}
+    for key in tweets.keys():
+        mean = np.mean(tweets[key])
+        dict_day[key] = mean
+    rows = zip(dict_day.keys(), dict_day.values())
+    with open('datasets/tweets_with_sentiment.csv', "w") as f:
+        writer = csv.writer(f)
+        for row in rows:
+            writer.writerow(row)
 
+tweet_dict = sentiment_tweets(clean_tweets())
+print(dict_day(tweet_dict))
 #process_tweets()
 #sentiment_tweets()
 #processedfile = open('datasets/tweets_processed.txt', 'r')
