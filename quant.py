@@ -7,14 +7,15 @@ class Quant:
         self.QuantDataset = QuantDatasetBitcoin(
             dataset_path=args.get('dataset'),
             currency=args.get('currency'),
-            override=args.get('override')
+            override=args.get('override'),
+            twitter=args.get('twitter')
         )
 
         if args.get('plot'):
 
             self.QuantDataset.plot()
 
-        model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet')
+        model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=args.get('twitter'))
 
         X_test, y_test = model.X_test, model.y_test
 
@@ -37,5 +38,6 @@ if __name__ == '__main__':
     p.add_argument('--dataset', help='specify dataset path', default=os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC-ind-trends.csv")
     p.add_argument('--currency', help='specify training data currency', default="BTC")
     p.add_argument('--plot', help='plot data', action="store_true")
+    p.add_argument('--twitter', help='use sentiment data', action="store_true")
     args = p.parse_args()
     q = Quant(vars(args))

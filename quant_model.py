@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import csv
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
-import tflearn as tf
 from keras.layers.core import Dense, Activation, Dropout
 from keras.layers.recurrent import LSTM
 from keras.models import Sequential
@@ -13,25 +12,33 @@ import tensorflow
 
 class QuantModel:
 
-    def __init__(self, input_values, expected_values, modeltype = "linreg"):
+    def __init__(self, input_values, expected_values, modeltype = "linreg", twitter=False):
+        if not twitter:
+            if modeltype == "linreg":
+                self.type = "LinearRegression"
+                self.model = self.linear_regression_model(input_values, expected_values)
+            elif modeltype == "neurnet":
+                self.type = "NeuralNetwork"
+                self.model = self.neural_net(input_values, expected_values)
+                print(self.validate_sign(self.model.predict(self.X_test), self.y_test))
+                print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3]))
+        else:
+            if modeltype == "linreg":
+                self.type = "LinearRegression"
+                self.model = self.linear_regression_model(input_values, expected_values)
+            elif modeltype == "neurnet":
+                self.type = "NeuralNetwork"
+                self.model = self.neural_net_sent(input_values, expected_values)
+                print(self.validate_sign(self.model.predict(self.X_test), self.y_test))
+                print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3]))
 
-        dates = input_values['Date'][50:]
+    def neural_net(self, input_values, expected_values):
+        model = Sequential()
+
+        dates = input_values['Date'][50:].values
         input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends'])[50:].values
         expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
         self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
-
-        if modeltype == "linreg":
-            self.type = "LinearRegression"
-            self.model = self.linear_regression_model(input_values, expected_values, dates)
-        elif modeltype == "neurnet":
-            self.type = "NeuralNetwork"
-            self.model = self.neural_net(input_values, expected_values, dates)
-            print(self.validate_sign(self.model.predict(self.X_test), self.y_test))
-            print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3]))
-
-
-    def neural_net(self, input_values, expected_values, dates):
-        model = Sequential()
 
         self.X_train = self.X_train.reshape((self.X_train.shape[0], 1, self.X_train.shape[1]))
         self.X_test = self.X_test.reshape((self.X_test.shape[0], 1, self.X_test.shape[1]))
@@ -44,41 +51,54 @@ class QuantModel:
         model.add(Dense(1))
         model.compile(loss='mse', optimizer='Nadam') # Nadam is heel bueno
 
-
         history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=1, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
-
         return model
-        # plt.plot(dates, expected_values)
-        # plt.plot(dates, model.predict(input_values))
-        # plt.show()
 
-    def linear_regression_model(input_values, expected_values, dates111):
+
+    def linear_regression_model(input_values, expected_values):
         # linear regression model saven in body_regression
         body_regression = linear_model.LinearRegression()
-        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends'])
-        expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
 
+        dates = input_values['Date'][50:].values
+        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends'])[50:].values
+        expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
         self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
 
         body_regression.fit(input_values[50:], expected_values)
-
-        # plt.plot(dates.values.reshape(1474,1)[50:], body_regression.predict(input_values[50:]))
-        # plt.show()
         return body_regression
 
 
-    def validate_sign(self, predictions, targets):
+    def neural_net_sent(self, input_values, expected_values):
+        model = Sequential()
 
+        dates = input_values['Date'][50:].values
+        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends', 'tsentiment']).values
+        expected_values = expected_values['Change 24h'].values.reshape(119,1)
+        self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
+
+        self.X_train = self.X_train.reshape((self.X_train.shape[0], 1, self.X_train.shape[1]))
+        self.X_test = self.X_test.reshape((self.X_test.shape[0], 1, self.X_test.shape[1]))
+        input_values = input_values.reshape((input_values.shape[0], 1, input_values.shape[1]))
+
+        model.add(LSTM(
+            500,
+            input_shape=(self.X_train.shape[1], self.X_train.shape[2])
+        ))
+        model.add(Dense(1))
+        model.compile(loss='mse', optimizer='Nadam') # Nadam is heel bueno
+        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=1, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
+
+        return model
+
+    def validate_sign(self, predictions, targets):
         correct = 0
         for index, value in enumerate(predictions):
             if np.sign(value) == np.sign(targets[index]):
                 correct += 1
-
         return (correct / len(predictions)) * 100
 
 
     def validate_classes(self, predictions, targets, thresholds):
-
         correct = 0
         predicted = 0
         print(min(predictions))
@@ -88,7 +108,6 @@ class QuantModel:
                 if np.sign(value) == np.sign(targets[index]):
                     correct += 1
                 predicted += 1
-
         return (correct / predicted) * 100, predicted
 
 

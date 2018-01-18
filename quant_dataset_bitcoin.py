@@ -19,16 +19,22 @@ class QuantDatasetBitcoin:
     now = round(time.time())
     dataset_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC-ind-trends.csv"
     target_path = os.path.dirname(os.path.abspath(__file__)) + "/datasets/targets.csv"
+    dataset_path_twitter = os.path.dirname(os.path.abspath(__file__)) + "/datasets/BTC-ind-trends-tweets.csv"
+    target_path_twitter = os.path.dirname(os.path.abspath(__file__)) + "/datasets/targets-tweets.csv"
     indicators = ['macd','macds','macdh','rsi_14']
     thresholds = [-5, 5]
 
     # create dataset
-    def __init__(self, currency = "BTC", dataset_path = dataset_path, override=False):
-        self.override = override
-        self.dataset = self.getdataset(currency, dataset_path)
-        self.target = self.gettargetdata(thresholds = self.thresholds)
+    def __init__(self, currency = "BTC", dataset_path = dataset_path, override=False, twitter=False):
+        if not twitter:
+            self.override = override
+            self.dataset = self.getdataset(currency, dataset_path)
+            self.target = self.gettargetdata(thresholds = self.thresholds)
+        else:
+            self.dataset = self.fromcsv(self.dataset_path_twitter)
+            self.target = self.fromcsv(self.target_path_twitter)
+    
 
-    #
     def gettrenddataset(self, currency):
         # add stock data
         stockdataset = self.pullstockdata(currency)
