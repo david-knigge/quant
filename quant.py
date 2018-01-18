@@ -14,16 +14,19 @@ class Quant:
 
             self.QuantDataset.plot()
 
-        #neural_net = QuantModel.Linear_regression_model(self.getdataset(), self.gettarget())
-        #model = QuantModel("neurnet")
-        #model.neural_net_train(self.getdataset(), self.gettarget())
+        model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet')
 
+        X_test, y_test = model.X_test, model.y_test
 
-    def getdataset(self, augmented=True):
-        return self.QuantDataset.dataset
+        # neural_net = QuantModel.Linear_regression_model(self.getdataset(), self.gettarget())
+        # model = QuantModel("neurnet")
+        # model.neural_net_train(self.getdataset(), self.gettarget())
 
-    def gettarget(self):
-        return self.QuantDataset.target
+    def sim_trade(self, dataset, investment):
+        pass
+
+    def opt_trade(self, target, investment):
+        pass
 
 if __name__ == '__main__':
     import os

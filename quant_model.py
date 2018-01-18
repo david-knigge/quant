@@ -6,55 +6,92 @@ import csv
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import tflearn as tf
+from keras.layers.core import Dense, Activation, Dropout
+from keras.layers.recurrent import LSTM
+from keras.models import Sequential
 import tensorflow
 
 class QuantModel:
 
-    def __init__(self, modeltype = "linreg"):
+    def __init__(self, input_values, expected_values, modeltype = "linreg"):
+
+        dates = input_values['Date'][50:]
+        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends'])[50:].values
+        expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
+        self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
+
         if modeltype == "linreg":
             self.type = "LinearRegression"
+            self.model = self.linear_regression_model(input_values, expected_values, dates)
         elif modeltype == "neurnet":
             self.type = "NeuralNetwork"
-            net = tf.input_data([None,4])
-            print(tensorflow.shape(net))
-            net = tf.embedding(net, input_dim=1424, output_dim=128)
-            net = tf.lstm(net, 128, dropout=0.8)
-            net = tf.fully_connected(net, 2, activation='softmax')
-            net = tf.regression(net, optimizer='adam', learning_rate=0.0001, loss='categorical_crossentropy')
-
-            self.model = tf.DNN(net, tensorboard_verbose=0)
+            self.model = self.neural_net(input_values, expected_values, dates)
+            print(self.validate_sign(self.model.predict(self.X_test), self.y_test))
+            print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3]))
 
 
-    def neural_net_train(self, input_values, expected_values):
-        dates = input_values['Date'][50:]
-        input_values = input_values.reindex(columns=['Close', 'macd', 'macds', 'macdh'])[50:]
-        expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
+    def neural_net(self, input_values, expected_values, dates):
+        model = Sequential()
 
-        X_train, X_test, y_train, y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
+        self.X_train = self.X_train.reshape((self.X_train.shape[0], 1, self.X_train.shape[1]))
+        self.X_test = self.X_test.reshape((self.X_test.shape[0], 1, self.X_test.shape[1]))
+        input_values = input_values.reshape((input_values.shape[0], 1, input_values.shape[1]))
 
-        self.model.fit(X_train, y_train, show_metric=True)
+        model.add(LSTM(
+            500,
+            input_shape=(self.X_train.shape[1], self.X_train.shape[2])
+        ))
+        model.add(Dense(1))
+        model.compile(loss='mse', optimizer='Nadam') # Nadam is heel bueno
 
-    def Linear_regression_model(input_values, expected_values):
+
+        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=1, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
+
+        return model
+        # plt.plot(dates, expected_values)
+        # plt.plot(dates, model.predict(input_values))
+        # plt.show()
+
+    def linear_regression_model(input_values, expected_values, dates111):
         # linear regression model saven in body_regression
         body_regression = linear_model.LinearRegression()
-        dates = input_values['Date']
-        input_values = input_values.reindex(columns=['Close', 'macd', 'macds', 'macdh'])
+        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends'])
+        expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
 
-        body_regression.fit(input_values[50:], np.array(expected_values['Change 24h'].values.reshape(1474,1)[50:]))
+        self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
+
+        body_regression.fit(input_values[50:], expected_values)
+
+        # plt.plot(dates.values.reshape(1474,1)[50:], body_regression.predict(input_values[50:]))
+        # plt.show()
+        return body_regression
 
 
-        #plt.scatter(input_values, np.asarray(expected_values['Target']).reshape(1474,1))
-        # print("The values: ")
-        # print(dates.values.reshape(1474,1)[50:])
-        # print("The values: ")
-        # print(input_values[50:])
-        # print("The shape: ")
-        # print(dates.values.reshape(1474,1)[50:].shape)
-        # print("The shape: ")
-        # print(input_values[50:].shape)
-        plt.plot(dates.values.reshape(1474,1)[50:], body_regression.predict(input_values[50:]))
-        #plt.show()
-        return plt
+    def validate_sign(self, predictions, targets):
+
+        correct = 0
+        for index, value in enumerate(predictions):
+            if np.sign(value) == np.sign(targets[index]):
+                correct += 1
+
+        return (correct / len(predictions)) * 100
+
+
+    def validate_classes(self, predictions, targets, thresholds):
+
+        correct = 0
+        predicted = 0
+        print(min(predictions))
+        print(max(predictions))
+        for index, value in enumerate(predictions):
+            if value > thresholds[1] or value < thresholds[0]:
+                if np.sign(value) == np.sign(targets[index]):
+                    correct += 1
+                predicted += 1
+
+        return (correct / predicted) * 100, predicted
+
+
 """
 if __name__ = '__main__':
     neural_net = NeuralNetwork()
