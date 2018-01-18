@@ -31,14 +31,6 @@ class QuantModel:
         expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
 
         X_train, X_test, y_train, y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
-        print(X_train[:10])
-        print("")
-        print(X_test[:10])
-        print("")
-        print(y_train[:10])
-        print("")
-        print(y_test[:10])
-        print("")
 
         self.model.fit(X_train, y_train, show_metric=True)
 
