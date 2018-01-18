@@ -1,5 +1,8 @@
 from quant_dataset_bitcoin import QuantDatasetBitcoin
 from quant_model import QuantModel
+import sys
+from datetime import datetime
+
 
 class Quant:
 
@@ -14,8 +17,27 @@ class Quant:
         if args.get('plot'):
 
             self.QuantDataset.plot()
+        start_time = datetime.now()
+        latest_time = datetime.now()
 
-        model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=args.get('twitter'))
+        losses = ['mse', 'mae', 'mape', 'msle', 'squared_hinge', 'hinge',
+        'categorical_hinge', 'logcosh', 'binary_crossentropy',
+        'kullback_leibler_divergence', 'poisson',]
+
+        optimizers = ['SGD', 'RMSprop', 'Adagrad', 'Adadelta',
+        'Adam', 'Adamax', 'Nadam']
+
+        for loss in losses:
+            for optimizer in optimizers:
+                average = 0
+                for i in range(1):
+                    model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=args.get('twitter'), batches=1, loss_type=loss, opt=optimizer)
+                    average += model.correct
+
+                print("Loss type: " + loss + ", optimizer: " + optimizer + ", precision: " + str(average) + "%, time: " + str(datetime.now() - latest_time))
+                latest_time = datetime.now()
+                sys.stdout.flush()
+        print("Everything took " + str(datetime.now() - start_time) + "seconds")
 
         X_test, y_test = model.X_test, model.y_test
 

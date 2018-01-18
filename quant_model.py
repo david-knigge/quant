@@ -12,27 +12,27 @@ import tensorflow
 
 class QuantModel:
 
-    def __init__(self, input_values, expected_values, modeltype = "linreg", twitter=False):
+    def __init__(self, input_values, expected_values, modeltype = "linreg", twitter=False, batches=1, loss_type="mse", opt="Nadam"):
         if not twitter:
             if modeltype == "linreg":
                 self.type = "LinearRegression"
                 self.model = self.linear_regression_model(input_values, expected_values)
             elif modeltype == "neurnet":
                 self.type = "NeuralNetwork"
-                self.model = self.neural_net(input_values, expected_values)
-                print(self.validate_sign(self.model.predict(self.X_test), self.y_test))
-                print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3]))
+                self.model = self.neural_net(input_values, expected_values, batches, loss_type, opt)
+                self.correct = self.validate_sign(self.model.predict(self.X_test), self.y_test)
+                self.classes = self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3])
         else:
             if modeltype == "linreg":
                 self.type = "LinearRegression"
                 self.model = self.linear_regression_model(input_values, expected_values)
             elif modeltype == "neurnet":
                 self.type = "NeuralNetwork"
-                self.model = self.neural_net_sent(input_values, expected_values)
-                print(self.validate_sign(self.model.predict(self.X_test), self.y_test))
-                print(self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3]))
+                self.model = self.neural_net_sent(input_values, expected_values, batches, loss_type, opt)
+                self.correct = self.validate_sign(self.model.predict(self.X_test), self.y_test)
+                self.classes = self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3])
 
-    def neural_net(self, input_values, expected_values):
+    def neural_net(self, input_values, expected_values, batches, loss_type, opt):
         model = Sequential()
 
         dates = input_values['Date'][50:].values
@@ -49,9 +49,9 @@ class QuantModel:
             input_shape=(self.X_train.shape[1], self.X_train.shape[2])
         ))
         model.add(Dense(1))
-        model.compile(loss='mse', optimizer='Nadam') # Nadam is heel bueno
+        model.compile(loss=loss_type, optimizer=opt) # Nadam is heel bueno
 
-        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=1, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
+        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
         return model
 
 
@@ -68,7 +68,7 @@ class QuantModel:
         return body_regression
 
 
-    def neural_net_sent(self, input_values, expected_values):
+    def neural_net_sent(self, input_values, expected_values, batches, loss_type, opt):
         model = Sequential()
 
         dates = input_values['Date'][50:].values
@@ -85,8 +85,8 @@ class QuantModel:
             input_shape=(self.X_train.shape[1], self.X_train.shape[2])
         ))
         model.add(Dense(1))
-        model.compile(loss='mse', optimizer='Nadam') # Nadam is heel bueno
-        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=1, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
+        model.compile(loss=loss_type, optimizer=opt) # Nadam is heel bueno
+        history = model.fit(self.X_train, self.y_train, epochs=1, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=0, shuffle=False)
 
         return model
 
