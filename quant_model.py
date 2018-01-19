@@ -12,37 +12,40 @@ import tensorflow
 
 class QuantModel:
 
-    def __init__(self, input_values, expected_values, modeltype = "linreg", twitter=False, batches=1, loss_type="mse", opt="Nadam"):
+    variables = ['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends']
+
+
+    def __init__(self, input_values, expected_values, modeltype = "linreg", twitter=False, batches=1, loss_type="mse", opt="Nadam", variables=variables):
         if not twitter:
             if modeltype == "linreg":
                 self.type = "LinearRegression"
-                self.model = self.linear_regression_model(input_values, expected_values)
+                self.model = self.linear_regression_model(input_values, expected_values, variables)
             elif modeltype == "neurnet":
                 self.type = "NeuralNetwork"
-                self.model = self.neural_net(input_values, expected_values, batches, loss_type, opt)
+                self.model = self.neural_net(input_values, expected_values, batches, loss_type, opt, variables)
                 self.correct = self.validate_sign(self.model.predict(self.X_test), self.y_test)
                 self.classes = self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3])
         else:
             if modeltype == "linreg":
                 self.type = "LinearRegression"
-                self.model = self.linear_regression_model(input_values, expected_values)
+                self.model = self.linear_regression_model(input_values, expected_values, variables)
             elif modeltype == "neurnet":
                 self.type = "NeuralNetwork"
-                self.model = self.neural_net_sent(input_values, expected_values, batches, loss_type, opt)
+                self.model = self.neural_net_sent(input_values, expected_values, batches, loss_type, opt, variables)
                 self.correct = self.validate_sign(self.model.predict(self.X_test), self.y_test)
                 self.classes = self.validate_classes(self.model.predict(self.X_test), self.y_test, [-0.3, 0.3])
 
-    def neural_net(self, input_values, expected_values, batches, loss_type, opt):
+    def neural_net(self, input_values, expected_values, batches, loss_type, opt, variables):
         model = Sequential()
 
-        dates = input_values['Date'][50:].values
-        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends'])[50:].values
-        expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
-        self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
+        self.dates = input_values['Date'][50:].values
+        self.input_values = input_values.reindex(columns=variables)[50:].values
+        self.expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
+        self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(self.input_values, self.expected_values, test_size=0.33)
 
         self.X_train = self.X_train.reshape((self.X_train.shape[0], 1, self.X_train.shape[1]))
         self.X_test = self.X_test.reshape((self.X_test.shape[0], 1, self.X_test.shape[1]))
-        input_values = input_values.reshape((input_values.shape[0], 1, input_values.shape[1]))
+        self.input_values = self.input_values.reshape((self.input_values.shape[0], 1, self.input_values.shape[1]))
 
         model.add(LSTM(
             500,
@@ -55,12 +58,12 @@ class QuantModel:
         return model
 
 
-    def linear_regression_model(input_values, expected_values):
+    def linear_regression_model(input_values, expected_values, variables):
         # linear regression model saven in body_regression
         body_regression = linear_model.LinearRegression()
 
         dates = input_values['Date'][50:].values
-        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends'])[50:].values
+        input_values = input_values.reindex(columns=variables)[50:].values
         expected_values = expected_values['Change 24h'].values.reshape(1474,1)[50:]
         self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
 
@@ -68,13 +71,15 @@ class QuantModel:
         return body_regression
 
 
-    def neural_net_sent(self, input_values, expected_values, batches, loss_type, opt):
+    def neural_net_sent(self, input_values, expected_values, batches, loss_type, opt, variables):
+
+        variables.append("tsentiment")
         model = Sequential()
 
-        dates = input_values['Date'][50:].values
-        input_values = input_values.reindex(columns=['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends', 'tsentiment']).values
-        expected_values = expected_values['Change 24h'].values.reshape(119,1)
-        self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(input_values, expected_values, test_size=0.33)
+        self.dates = input_values['Date'][50:].values
+        self.input_values = input_values.reindex(columns=variables).values
+        self.expected_values = expected_values['Change 24h'].values.reshape(119,1)
+        self.X_train, self.X_test, self.y_train, self.y_test = model_selection.train_test_split(self.input_values, self.expected_values, test_size=0.33)
 
         self.X_train = self.X_train.reshape((self.X_train.shape[0], 1, self.X_train.shape[1]))
         self.X_test = self.X_test.reshape((self.X_test.shape[0], 1, self.X_test.shape[1]))
