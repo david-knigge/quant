@@ -27,17 +27,42 @@ class Quant:
         optimizers = ['SGD', 'RMSprop', 'Adagrad', 'Adadelta',
         'Adam', 'Adamax', 'Nadam']
 
-        for loss in losses:
-            for optimizer in optimizers:
-                average = 0
-                for i in range(1):
-                    model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=args.get('twitter'), batches=1, loss_type=loss, opt=optimizer)
-                    average += model.correct
+        best_precision = 0
+        best_loss = "beep"
+        best_opt = "boop"
+        best_batch = 0
 
-                print("Loss type: " + loss + ", optimizer: " + optimizer + ", precision: " + str(average) + "%, time: " + str(datetime.now() - latest_time))
-                latest_time = datetime.now()
-                sys.stdout.flush()
-        print("Everything took " + str(datetime.now() - start_time) + "seconds")
+        best_list = []
+
+        for i in range(1,3):
+            for loss in losses:
+                for optimizer in optimizers:
+                    average = 0
+                    # try:
+                    for j in range(5):
+                        model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=args.get('twitter'), batches=i, loss_type=loss, opt=optimizer)
+                        average += model.correct
+
+                    if (average/5) > best_precision:
+                        best_precision = average/5
+                        best_loss = loss
+                        best_opt = optimizer
+                        best_batch = i
+
+                    print("Loss type: " + loss + ", optimizer: " + optimizer + ", precision: " + str(average/5) + "%, batch size: " + str(i) + ", time: " + str(datetime.now() - latest_time))
+                    latest_time = datetime.now()
+                    sys.stdout.flush()
+                    # except:
+                    #     print(str(loss) + ", " + str(optimizer) + ", " + str(i))
+                    #     sys.stdout.flush()
+            print("Everything for batch size \"" + str(i) + "\" took " + str(datetime.now() - start_time) + "seconds")
+            best_list.append("The best settings at batch size \"" + str(i) + "\" are: "+
+            "\n \t Loss type: " + best_loss +
+            "\n \t Optimizer: " + best_opt +
+            "\n \t Precision: " + str(best_precision) +
+            "\n \t Batch size: " + str(best_batch))
+            sys.stdout.flush()
+        print(best_list)
 
         X_test, y_test = model.X_test, model.y_test
 

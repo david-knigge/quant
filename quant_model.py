@@ -51,7 +51,7 @@ class QuantModel:
         model.add(Dense(1))
         model.compile(loss=loss_type, optimizer=opt) # Nadam is heel bueno
 
-        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
+        history = model.fit(self.X_train, self.y_train, epochs=1, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
         return model
 
 
@@ -101,8 +101,8 @@ class QuantModel:
     def validate_classes(self, predictions, targets, thresholds):
         correct = 0
         predicted = 0
-        print(min(predictions))
-        print(max(predictions))
+        #print(min(predictions))
+        #print(max(predictions))
         for index, value in enumerate(predictions):
             if value > thresholds[1] or value < thresholds[0]:
                 if np.sign(value) == np.sign(targets[index]):
