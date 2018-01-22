@@ -3,6 +3,7 @@ from quant_model import QuantModel
 import sys
 from datetime import datetime
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Quant:
@@ -79,23 +80,46 @@ class Quant:
 
     def plot(self):
 
+        dates = []
+        for date in self.QuantDataset.dataset['Date']:
+            dates.append(datetime.fromtimestamp(date))
+        dates = np.array(dates[50:]).reshape(1424,1)
+
         plt.figure(1)
         plt.subplot(2,2,1)
         QM = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=self.twitter, batches=1, loss_type='mse', opt='Nadam', variables= ['Price % 24h', 'Volume % 24h'])
-        plt.plot(QM.dates, QM.model.predict(QM.input_values))
+        plt.plot(dates, QM.expected_values, color='red', ls='--')
+        plt.plot(dates, QM.model.predict(QM.input_values))
+        plt.ylabel('24h % change')
+        plt.xlabel('Date')
+        plt.title('Price , Volume')
+        plt.draw()
 
-        # plt.subplot(2,2,2)
-        # model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=self.twitter, batches=1, loss_type='mse', opt='Nadam', variables= ['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14'])
-        # plt.plot(QM.dates, QM.model.predict(QM.input_values))
-        #
-        # plt.subplot(2,2,3)
-        # model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=self.twitter, batches=1, loss_type='mse', opt='Nadam', variables= ['Price % 24h', 'Volume % 24h', 'macdh', 'gtrends'])
-        # plt.plot(QM.dates, QM.model.predict(QM.input_values))
-        #
-        # plt.subplot(2,2,4)
-        # model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=self.twitter, batches=1, loss_type='mse', opt='Nadam', variables= ['Price % 24h', 'Volume % 24h', 'rsi_14', 'gtrends'])
-        # plt.plot(QM.dates, QM.model.predict(QM.input_values))
+        plt.subplot(2,2,2)
+        QM = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=self.twitter, batches=1, loss_type='mse', opt='Nadam', variables= ['Price % 24h', 'Volume % 24h', 'macdh % 24h', 'rsi_14 % 24h'])
+        plt.plot(dates, QM.expected_values, color='red', ls='--')
+        plt.plot(dates, QM.model.predict(QM.input_values))
+        plt.ylabel('24h % change')
+        plt.xlabel('Date')
+        plt.title('Price, Volume, macdh, rsi_14')
+        plt.draw()
 
+        plt.subplot(2,2,3)
+        QM = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=self.twitter, batches=1, loss_type='mse', opt='Nadam', variables= ['Price % 24h', 'Volume % 24h', 'rsi_14 % 24h'])
+        plt.plot(dates, QM.expected_values, color='red', ls='--')
+        plt.plot(dates, QM.model.predict(QM.input_values))
+        plt.ylabel('24h % change')
+        plt.xlabel('Date')
+        plt.title('Price, Volume, rsi_14')
+        plt.draw()
+
+        plt.subplot(2,2,4)
+        QM = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=self.twitter, batches=1, loss_type='mse', opt='Nadam', variables= ['Price % 24h', 'Volume % 24h', 'rsi_14 % 24h', 'macdh % 24h', 'gtrends % 24h'])
+        plt.plot(dates, QM.expected_values, color='red', ls='--')
+        plt.plot(dates, QM.model.predict(QM.input_values))
+        plt.ylabel('24h % change')
+        plt.xlabel('Date')
+        plt.title('Price, Volume, rsi_14, macd, googletrends')
         plt.show()
 
         #model = QuantModel(self.QuantDataset.dataset, self.QuantDataset.target, modeltype='neurnet', twitter=args.get('twitter'), batches=1, loss_type='mse', opt='Nadam', variables= ['Price % 24h', 'Volume % 24h', 'gtrends'])
