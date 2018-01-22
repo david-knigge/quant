@@ -1,0 +1,365 @@
+ 	 --- time it took for this loss function: 0:03:54.476063
+Loss type: mse, optimizer: SGD, precision: 59.5%, batch size: 1
+Loss type: mse, optimizer: RMSprop, precision: 62.0%, batch size: 1
+Loss type: mse, optimizer: Adagrad, precision: 56.5%, batch size: 1
+Loss type: mse, optimizer: Adadelta, precision: 49.0%, batch size: 1
+Loss type: mse, optimizer: Adam, precision: 61.5%, batch size: 1
+Loss type: mse, optimizer: Adamax, precision: 63.0%, batch size: 1
+Loss type: mse, optimizer: Nadam, precision: 56.0%, batch size: 1
+
+ 	 --- time it took for this loss function: 0:04:10.865318
+Loss type: mae, optimizer: SGD, precision: 58.0%, batch size: 1
+Loss type: mae, optimizer: RMSprop, precision: 64.5%, batch size: 1
+Loss type: mae, optimizer: Adagrad, precision: 58.0%, batch size: 1
+Loss type: mae, optimizer: Adadelta, precision: 64.5%, batch size: 1
+Loss type: mae, optimizer: Adam, precision: 52.5%, batch size: 1
+Loss type: mae, optimizer: Adamax, precision: 63.0%, batch size: 1
+Loss type: mae, optimizer: Nadam, precision: 52.0%, batch size: 1
+
+ 	 --- time it took for this loss function: 0:04:01.400229
+Loss type: mape, optimizer: SGD, precision: 46.5%, batch size: 1
+Loss type: mape, optimizer: RMSprop, precision: 48.0%, batch size: 1
+Loss type: mape, optimizer: Adagrad, precision: 51.0%, batch size: 1
+Loss type: mape, optimizer: Adadelta, precision: 50.5%, batch size: 1
+Loss type: mape, optimizer: Adam, precision: 54.5%, batch size: 1
+Loss type: mape, optimizer: Adamax, precision: 48.5%, batch size: 1
+Loss type: mape, optimizer: Nadam, precision: 43.0%, batch size: 1
+
+ 	 --- time it took for this loss function: 0:04:05.507485
+Loss type: msle, optimizer: SGD, precision: 42.5%, batch size: 1
+Loss type: msle, optimizer: RMSprop, precision: 47.5%, batch size: 1
+Loss type: msle, optimizer: Adagrad, precision: 39.0%, batch size: 1
+Loss type: msle, optimizer: Adadelta, precision: 54.5%, batch size: 1
+Loss type: msle, optimizer: Adam, precision: 49.5%, batch size: 1
+Loss type: msle, optimizer: Adamax, precision: 51.5%, batch size: 1
+Loss type: msle, optimizer: Nadam, precision: 38.5%, batch size: 1
+
+
+ 	 --- time it took for this loss function: 0:04:01.378842
+Loss type: squared_hinge, optimizer: SGD, precision: 38.0%, batch size: 1
+Loss type: squared_hinge, optimizer: RMSprop, precision: 56.5%, batch size: 1
+Loss type: squared_hinge, optimizer: Adagrad, precision: 54.5%, batch size: 1
+Loss type: squared_hinge, optimizer: Adadelta, precision: 58.5%, batch size: 1
+Loss type: squared_hinge, optimizer: Adam, precision: 55.5%, batch size: 1
+Loss type: squared_hinge, optimizer: Adamax, precision: 59.5%, batch size: 1
+Loss type: squared_hinge, optimizer: Nadam, precision: 51.0%, batch size: 1
+
+
+ 	 --- time it took for this loss function: 0:04:11.730069
+Loss type: hinge, optimizer: SGD, precision: 60.0%, batch size: 1
+Loss type: hinge, optimizer: RMSprop, precision: 62.0%, batch size: 1
+Loss type: hinge, optimizer: Adagrad, precision: 57.5%, batch size: 1
+Loss type: hinge, optimizer: Adadelta, precision: 65.5%, batch size: 1
+Loss type: hinge, optimizer: Adam, precision: 60.5%, batch size: 1
+Loss type: hinge, optimizer: Adamax, precision: 61.0%, batch size: 1
+Loss type: hinge, optimizer: Nadam, precision: 54.5%, batch size: 1
+
+
+ 	 --- time it took for this loss function: 0:04:11.310165
+Loss type: categorical_hinge, optimizer: SGD, precision: 49.5%, batch size: 1
+Loss type: categorical_hinge, optimizer: RMSprop, precision: 40.5%, batch size: 1
+Loss type: categorical_hinge, optimizer: Adagrad, precision: 59.5%, batch size: 1
+Loss type: categorical_hinge, optimizer: Adadelta, precision: 50.5%, batch size: 1
+Loss type: categorical_hinge, optimizer: Adam, precision: 61.5%, batch size: 1
+Loss type: categorical_hinge, optimizer: Adamax, precision: 53.5%, batch size: 1
+Loss type: categorical_hinge, optimizer: Nadam, precision: 55.0%, batch size: 1
+
+
+ 	 --- time it took for this loss function: 0:04:12.756875
+Loss type: logcosh, optimizer: SGD, precision: 59.5%, batch size: 1
+Loss type: logcosh, optimizer: RMSprop, precision: 61.0%, batch size: 1
+Loss type: logcosh, optimizer: Adagrad, precision: 61.0%, batch size: 1
+Loss type: logcosh, optimizer: Adadelta, precision: 60.5%, batch size: 1
+Loss type: logcosh, optimizer: Adam, precision: 53.5%, batch size: 1
+Loss type: logcosh, optimizer: Adamax, precision: 55.5%, batch size: 1
+Loss type: logcosh, optimizer: Nadam, precision: 60.5%, batch size: 1
+
+
+ 	 --- time it took for this loss function: 0:04:07.829517
+Loss type: binary_crossentropy, optimizer: SGD, precision: 39.0%, batch size: 1
+Loss type: binary_crossentropy, optimizer: RMSprop, precision: 56.5%, batch size: 1
+Loss type: binary_crossentropy, optimizer: Adagrad, precision: 57.5%, batch size: 1
+Loss type: binary_crossentropy, optimizer: Adadelta, precision: 50.5%, batch size: 1
+Loss type: binary_crossentropy, optimizer: Adam, precision: 52.5%, batch size: 1
+Loss type: binary_crossentropy, optimizer: Adamax, precision: 54.5%, batch size: 1
+Loss type: binary_crossentropy, optimizer: Nadam, precision: 50.0%, batch size: 1
+
+
+ 	 --- time it took for this loss function: 0:03:48.022244
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 66.5%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 67.5%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 66.0%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 69.5%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 62.0%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 66.5%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 60.0%, batch size: 1
+
+
+ 	 --- time it took for this loss function: 0:03:43.370161
+Loss type: poisson, optimizer: SGD, precision: 30.0%, batch size: 1
+Loss type: poisson, optimizer: RMSprop, precision: 38.0%, batch size: 1
+Loss type: poisson, optimizer: Adagrad, precision: 30.5%, batch size: 1
+Loss type: poisson, optimizer: Adadelta, precision: 45.0%, batch size: 1
+Loss type: poisson, optimizer: Adam, precision: 41.0%, batch size: 1
+Loss type: poisson, optimizer: Adamax, precision: 38.5%, batch size: 1
+Loss type: poisson, optimizer: Nadam, precision: 31.0%, batch size: 1
+
+
+ 	 --- time it took for this loss function: 0:35:49.118093    (20 runs ipv 5)
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 66.875%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 67.5.0%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 66.125%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 58.25%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 65.125, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 67.25%, batch size: 1
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 65.625%, batch size: 1
+
+                      !--- BATCH SIZE 2 ---!
+
+ 	 --- time it took for this loss function: 0:03:17.945486
+Loss type: mse, optimizer: SGD, precision: 60.5%, batch size: 2
+Loss type: mse, optimizer: RMSprop, precision: 58.5%, batch size: 2
+Loss type: mse, optimizer: Adagrad, precision: 59.0%, batch size: 2
+Loss type: mse, optimizer: Adadelta, precision: 60.0%, batch size: 2
+Loss type: mse, optimizer: Adam, precision: 63.5%, batch size: 2
+Loss type: mse, optimizer: Adamax, precision: 67.5%, batch size: 2
+Loss type: mse, optimizer: Nadam, precision: 56.5%, batch size: 2
+
+ 	 --- time it took for this loss function: 0:03:21.232984
+Loss type: mae, optimizer: SGD, precision: 55.0%, batch size: 2
+Loss type: mae, optimizer: RMSprop, precision: 63.0%, batch size: 2
+Loss type: mae, optimizer: Adagrad, precision: 58.0%, batch size: 2
+Loss type: mae, optimizer: Adadelta, precision: 56.5%, batch size: 2
+Loss type: mae, optimizer: Adam, precision: 54.5%, batch size: 2
+Loss type: mae, optimizer: Adamax, precision: 57.0%, batch size: 2
+Loss type: mae, optimizer: Nadam, precision: 63.0%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:37.142962
+Loss type: mape, optimizer: SGD, precision: 47.0%, batch size: 2
+Loss type: mape, optimizer: RMSprop, precision: 49.5%, batch size: 2
+Loss type: mape, optimizer: Adagrad, precision: 54.0%, batch size: 2
+Loss type: mape, optimizer: Adadelta, precision: 52.5%, batch size: 2
+Loss type: mape, optimizer: Adam, precision: 51.5%, batch size: 2
+Loss type: mape, optimizer: Adamax, precision: 52.0%, batch size: 2
+Loss type: mape, optimizer: Nadam, precision: 52.5%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:54.925531
+Loss type: msle, optimizer: SGD, precision: 58.5%, batch size: 2
+Loss type: msle, optimizer: RMSprop, precision: 55.5%, batch size: 2
+Loss type: msle, optimizer: Adagrad, precision: 39.0%, batch size: 2
+Loss type: msle, optimizer: Adadelta, precision: 56.0%, batch size: 2
+Loss type: msle, optimizer: Adam, precision: 52.5%, batch size: 2
+Loss type: msle, optimizer: Adamax, precision: 38.5%, batch size: 2
+Loss type: msle, optimizer: Nadam, precision: 44.5%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:49.408036
+Loss type: squared_hinge, optimizer: SGD, precision: 58.5%, batch size: 2
+Loss type: squared_hinge, optimizer: RMSprop, precision: 55.5%, batch size: 2
+Loss type: squared_hinge, optimizer: Adagrad, precision: 59.5%, batch size: 2
+Loss type: squared_hinge, optimizer: Adadelta, precision: 66.0%, batch size: 2
+Loss type: squared_hinge, optimizer: Adam, precision: 49.0%, batch size: 2
+Loss type: squared_hinge, optimizer: Adamax, precision: 58.5%, batch size: 2
+Loss type: squared_hinge, optimizer: Nadam, precision: 46.0%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:39.104385
+Loss type: hinge, optimizer: SGD, precision: 58.5%, batch size: 2
+Loss type: hinge, optimizer: RMSprop, precision: 56.0%, batch size: 2
+Loss type: hinge, optimizer: Adagrad, precision: 59.5%, batch size: 2
+Loss type: hinge, optimizer: Adadelta, precision: 58.5%, batch size: 2
+Loss type: hinge, optimizer: Adam, precision: 62.5%, batch size: 2
+Loss type: hinge, optimizer: Adamax, precision: 67.5%, batch size: 2
+Loss type: hinge, optimizer: Nadam, precision: 64.0%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:34.306002
+Loss type: categorical_hinge, optimizer: SGD, precision: 51.0%, batch size: 2
+Loss type: categorical_hinge, optimizer: RMSprop, precision: 50.0%, batch size: 2
+Loss type: categorical_hinge, optimizer: Adagrad, precision: 46.5%, batch size: 2
+Loss type: categorical_hinge, optimizer: Adadelta, precision: 52.5%, batch size: 2
+Loss type: categorical_hinge, optimizer: Adam, precision: 52.0%, batch size: 2
+Loss type: categorical_hinge, optimizer: Adamax, precision: 56.5%, batch size: 2
+Loss type: categorical_hinge, optimizer: Nadam, precision: 49.0%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:35.242231
+Loss type: logcosh, optimizer: SGD, precision: 58.5%, batch size: 2
+Loss type: logcosh, optimizer: RMSprop, precision: 63.0%, batch size: 2
+Loss type: logcosh, optimizer: Adagrad, precision: 56.5%, batch size: 2
+Loss type: logcosh, optimizer: Adadelta, precision: 55.0%, batch size: 2
+Loss type: logcosh, optimizer: Adam, precision: 63.0%, batch size: 2
+Loss type: logcosh, optimizer: Adamax, precision: 59.0%, batch size: 2
+Loss type: logcosh, optimizer: Nadam, precision: 34.5%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:42.779403
+Loss type: binary_crossentropy, optimizer: SGD, precision: 48.5%, batch size: 2
+Loss type: binary_crossentropy, optimizer: RMSprop, precision: 46.0%, batch size: 2
+Loss type: binary_crossentropy, optimizer: Adagrad, precision: 51.5%, batch size: 2
+Loss type: binary_crossentropy, optimizer: Adadelta, precision: 36.0%, batch size: 2
+Loss type: binary_crossentropy, optimizer: Adam, precision: 50.5%, batch size: 2
+Loss type: binary_crossentropy, optimizer: Adamax, precision: 43.0%, batch size: 2
+Loss type: binary_crossentropy, optimizer: Nadam, precision: 51.5%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:39.740225
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 60.5%, batch size: 2
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 66.0%, batch size: 2
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 61.5%, batch size: 2
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 67.5%, batch size: 2
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 65.0%, batch size: 2
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 69.5%, batch size: 2
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 66.0%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:03:28.377709
+Loss type: poisson, optimizer: SGD, precision: 37.5%, batch size: 2
+Loss type: poisson, optimizer: RMSprop, precision: 54.0%, batch size: 2
+Loss type: poisson, optimizer: Adagrad, precision: 31.0%, batch size: 2
+Loss type: poisson, optimizer: Adadelta, precision: 44.0%, batch size: 2
+Loss type: poisson, optimizer: Adam, precision: 48.5%, batch size: 2
+Loss type: poisson, optimizer: Adamax, precision: 49.0%, batch size: 2
+Loss type: poisson, optimizer: Nadam, precision: 51.0%, batch size: 2
+
+
+ 	 --- time it took for this loss function: 0:33:31.770895
+Loss type: poisson, optimizer: SGD, precision: 30.625%, batch size: 2
+Loss type: poisson, optimizer: RMSprop, precision: 36.75%, batch size: 2
+Loss type: poisson, optimizer: Adagrad, precision: 35.375%, batch size: 2
+Loss type: poisson, optimizer: Adadelta, precision: 35.75%, batch size: 2
+Loss type: poisson, optimizer: Adam, precision: 44.0%, batch size: 2
+Loss type: poisson, optimizer: Adamax, precision: 49.375%, batch size: 2
+Loss type: poisson, optimizer: Nadam, precision: 33.25%, batch size: 2
+
+
+                    !--- BATCH SIZE 3 ---!
+
+ 	 --- time it took for this loss function: 0:03:16.204315
+Loss type: mse, optimizer: SGD, precision: 66.0%, batch size: 3
+Loss type: mse, optimizer: RMSprop, precision: 59.0%, batch size: 3
+Loss type: mse, optimizer: Adagrad, precision: 62.0%, batch size: 3
+Loss type: mse, optimizer: Adadelta, precision: 53.5%, batch size: 3
+Loss type: mse, optimizer: Adam, precision: 62.0%, batch size: 3
+Loss type: mse, optimizer: Adamax, precision: 61.5%, batch size: 3
+Loss type: mse, optimizer: Nadam, precision: 59.5%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:03:19.369842
+Loss type: mae, optimizer: SGD, precision: 55.0%, batch size: 3
+Loss type: mae, optimizer: RMSprop, precision: 56.5%, batch size: 3
+Loss type: mae, optimizer: Adagrad, precision: 55.5%, batch size: 3
+Loss type: mae, optimizer: Adadelta, precision: 52.5%, batch size: 3
+Loss type: mae, optimizer: Adam, precision: 61.5%, batch size: 3
+Loss type: mae, optimizer: Adamax, precision: 62.5%, batch size: 3
+Loss type: mae, optimizer: Nadam, precision: 61.0%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:03:26.973608
+Loss type: mape, optimizer: SGD, precision: 43.0%, batch size: 3
+Loss type: mape, optimizer: RMSprop, precision: 44.0%, batch size: 3
+Loss type: mape, optimizer: Adagrad, precision: 48.5%, batch size: 3
+Loss type: mape, optimizer: Adadelta, precision: 59.5%, batch size: 3
+Loss type: mape, optimizer: Adam, precision: 45.5%, batch size: 3
+Loss type: mape, optimizer: Adamax, precision: 46.0%, batch size: 3
+Loss type: mape, optimizer: Nadam, precision: 56.0%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:03:03.911128
+Loss type: msle, optimizer: SGD, precision: 58.0%, batch size: 3
+Loss type: msle, optimizer: RMSprop, precision: 40.0%, batch size: 3
+Loss type: msle, optimizer: Adagrad, precision: 37.0%, batch size: 3
+Loss type: msle, optimizer: Adadelta, precision: 49.0%, batch size: 3
+Loss type: msle, optimizer: Adam, precision: 55.5%, batch size: 3
+Loss type: msle, optimizer: Adamax, precision: 53.5%, batch size: 3
+Loss type: msle, optimizer: Nadam, precision: 47.0%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:02:49.512901
+Loss type: squared_hinge, optimizer: SGD, precision: 68.0%, batch size: 3
+Loss type: squared_hinge, optimizer: RMSprop, precision: 56.5%, batch size: 3
+Loss type: squared_hinge, optimizer: Adagrad, precision: 62.5%, batch size: 3
+Loss type: squared_hinge, optimizer: Adadelta, precision: 56.5%, batch size: 3
+Loss type: squared_hinge, optimizer: Adam, precision: 51.0%, batch size: 3
+Loss type: squared_hinge, optimizer: Adamax, precision: 58.0%, batch size: 3
+Loss type: squared_hinge, optimizer: Nadam, precision: 55.0%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:03:00.904231
+Loss type: hinge, optimizer: SGD, precision: 49.0%, batch size: 3
+Loss type: hinge, optimizer: RMSprop, precision: 55.0%, batch size: 3
+Loss type: hinge, optimizer: Adagrad, precision: 58.5%, batch size: 3
+Loss type: hinge, optimizer: Adadelta, precision: 61.0%, batch size: 3
+Loss type: hinge, optimizer: Adam, precision: 64.0%, batch size: 3
+Loss type: hinge, optimizer: Adamax, precision: 63.0%, batch size: 3
+Loss type: hinge, optimizer: Nadam, precision: 59.0%, batch size: 3
+
+ 	 --- time it took for this loss function: 0:02:54.335390
+Loss type: categorical_hinge, optimizer: SGD, precision: 43.0%, batch size: 3
+Loss type: categorical_hinge, optimizer: RMSprop, precision: 53.5%, batch size: 3
+Loss type: categorical_hinge, optimizer: Adagrad, precision: 46.5%, batch size: 3
+Loss type: categorical_hinge, optimizer: Adadelta, precision: 49.5%, batch size: 3
+Loss type: categorical_hinge, optimizer: Adam, precision: 38.0%, batch size: 3
+Loss type: categorical_hinge, optimizer: Adamax, precision: 50.0%, batch size: 3
+Loss type: categorical_hinge, optimizer: Nadam, precision: 47.5%, batch size: 3
+
+ 	 --- time it took for this loss function: 0:02:51.589196
+Loss type: logcosh, optimizer: SGD, precision: 66.5%, batch size: 3
+Loss type: logcosh, optimizer: RMSprop, precision: 66.5%, batch size: 3
+Loss type: logcosh, optimizer: Adagrad, precision: 63.0%, batch size: 3
+Loss type: logcosh, optimizer: Adadelta, precision: 57.0%, batch size: 3
+Loss type: logcosh, optimizer: Adam, precision: 63.0%, batch size: 3
+Loss type: logcosh, optimizer: Adamax, precision: 58.0%, batch size: 3
+Loss type: logcosh, optimizer: Nadam, precision: 63.5%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:02:57.501206
+Loss type: binary_crossentropy, optimizer: SGD, precision: 44.0%, batch size: 3
+Loss type: binary_crossentropy, optimizer: RMSprop, precision: 48.0%, batch size: 3
+Loss type: binary_crossentropy, optimizer: Adagrad, precision: 43.5%, batch size: 3
+Loss type: binary_crossentropy, optimizer: Adadelta, precision: 57.5%, batch size: 3
+Loss type: binary_crossentropy, optimizer: Adam, precision: 49.0%, batch size: 3
+Loss type: binary_crossentropy, optimizer: Adamax, precision: 60.0%, batch size: 3
+Loss type: binary_crossentropy, optimizer: Nadam, precision: 53.5%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:02:48.324611
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 62.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 73.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 58.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 68.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 67.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 68.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 69.5%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:02:51.370905
+Loss type: poisson, optimizer: SGD, precision: 35.0%, batch size: 3
+Loss type: poisson, optimizer: RMSprop, precision: 36.5%, batch size: 3
+Loss type: poisson, optimizer: Adagrad, precision: 35.5%, batch size: 3
+Loss type: poisson, optimizer: Adadelta, precision: 37.0%, batch size: 3
+Loss type: poisson, optimizer: Adam, precision: 43.5%, batch size: 3
+Loss type: poisson, optimizer: Adamax, precision: 37.5%, batch size: 3
+Loss type: poisson, optimizer: Nadam, precision: 50.5%, batch size: 3
+
+
+ 	 --- time it took for this loss function: 0:27:10.236463 (ran 20 times)
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 66.125%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 67.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 66.125%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 66.875%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 67.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 66.25%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 62.25%, batch size: 3
+ 
+ 	 --- time it took for this loss function: 0:03:49.146390
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 62.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 70.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 64.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 62.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 65.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 70.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 67.0%, batch size: 3
+

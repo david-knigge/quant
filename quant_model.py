@@ -83,7 +83,7 @@ class QuantModel:
 
         self.X_train = self.X_train.reshape((self.X_train.shape[0], 1, self.X_train.shape[1]))
         self.X_test = self.X_test.reshape((self.X_test.shape[0], 1, self.X_test.shape[1]))
-        input_values = input_values.reshape((input_values.shape[0], 1, input_values.shape[1]))
+        input_values = input_values.values.reshape((input_values.shape[0], 1, input_values.shape[1]))
 
         model.add(LSTM(
             500,
@@ -91,7 +91,7 @@ class QuantModel:
         ))
         model.add(Dense(1))
         model.compile(loss=loss_type, optimizer=opt) # Nadam is heel bueno
-        history = model.fit(self.X_train, self.y_train, epochs=1, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=0, shuffle=False)
+        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
 
         return model
 
