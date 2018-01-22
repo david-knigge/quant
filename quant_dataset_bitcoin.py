@@ -33,7 +33,7 @@ class QuantDatasetBitcoin:
         else:
             self.dataset = self.fromcsv(self.dataset_path_twitter)
             self.target = self.fromcsv(self.target_path_twitter)
-    
+
 
     def gettrenddataset(self, currency):
         # add stock data
@@ -48,6 +48,9 @@ class QuantDatasetBitcoin:
         ])
         gtrends_stockdata = self.augmented_stockdataset.copy(deep=True)
         gtrends_stockdata['gtrends'] = gtrends_dated.values
+        enum = enumerate(gtrends_dated.values)
+        next(enum)
+        gtrends_stockdata['gtrends % 24h'] = [0] + [self.percentage(value - gtrends_dated.values[index - 1], gtrends_dated.values[index - 1]) for index, value in enum]
 
         self.tocsv(gtrends_stockdata, 'BTC-ind-trends')
         return gtrends_stockdata
@@ -145,7 +148,11 @@ class QuantDatasetBitcoin:
         augmented_dataset = dataset.copy(deep=True)
 
         for indicator in self.indicators:
-            augmented_dataset[indicator] = stockdataset[indicator].values
+            valuelist = stockdataset[indicator].values
+            enum = enumerate(valuelist)
+            next(enum)
+            augmented_dataset[indicator] = valuelist
+            augmented_dataset[indicator + " % 24h"] = [0] + [self.percentage(valuelist[index] - valuelist[index-1], valuelist[index-1] + 0.00001) for index, value in enum]
         return augmented_dataset
 
     # get target data values from file or calculate them
@@ -183,3 +190,6 @@ class QuantDatasetBitcoin:
 
     def hround(self, x, base=1):
         return int(base * round(float(x)/base))
+
+    def percentage(self, part, whole):
+        return 100 * float(part)/float(whole)
