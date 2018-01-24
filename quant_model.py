@@ -12,7 +12,7 @@ import tensorflow
 
 class QuantModel:
 
-    variables = ['Price % 24h', 'Volume % 24h', 'macdh', 'rsi_14', 'gtrends']
+    variables = ['Price % 24h', 'Volume % 24h', 'macdh % 24h', 'rsi_14 % 24h']#, 'gtrends % 24h']
 
 
     def __init__(self, input_values, expected_values, modeltype = "linreg", twitter=False, batches=1, loss_type="mse", opt="Nadam", variables=variables):
@@ -54,7 +54,7 @@ class QuantModel:
         model.add(Dense(1))
         model.compile(loss=loss_type, optimizer=opt) # Nadam is heel bueno
 
-        history = model.fit(self.X_train, self.y_train, epochs=1, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
+        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
         return model
 
 
@@ -91,7 +91,7 @@ class QuantModel:
         ))
         model.add(Dense(1))
         model.compile(loss=loss_type, optimizer=opt) # Nadam is heel bueno
-        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=2, shuffle=False)
+        history = model.fit(self.X_train, self.y_train, epochs=3, batch_size=batches, validation_data=(self.X_test, self.y_test), verbose=0, shuffle=False)
 
         return model
 

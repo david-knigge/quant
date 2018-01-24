@@ -42,10 +42,10 @@ class Quant:
         # best_list = []
 
         if args.get('evaluate'):
-            with open("results.txt", "a") as myfile:
+            with open("results2.0.txt", "a") as myfile:
                 #for i in range(1,5):
                     #for loss in losses:
-                attempts = 5
+                attempts = 20
                 loss = losses[9]
                 i = 3
                 average = [0,0,0,0,0,0,0]

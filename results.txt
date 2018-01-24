@@ -353,13 +353,3 @@ Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 66.875%,
 Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 67.5%, batch size: 3
 Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 66.25%, batch size: 3
 Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 62.25%, batch size: 3
- 
- 	 --- time it took for this loss function: 0:03:49.146390
-Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 62.0%, batch size: 3
-Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 70.0%, batch size: 3
-Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 64.5%, batch size: 3
-Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 62.0%, batch size: 3
-Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 65.0%, batch size: 3
-Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 70.5%, batch size: 3
-Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 67.0%, batch size: 3
-

@@ -1,0 +1,99 @@
+// 3 epochs
+    --- time it took for this loss function: 0:03:49.146390
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 62.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 70.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 64.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 62.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 65.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 70.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 67.0%, batch size: 3
+
+// zonder twitter met gtrends %
+    --- time it took for this loss function: 0:08:26.160650
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 53.829787234042556%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 55.06382978723404%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 54.042553191489354%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 53.957446808510646%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 54.08510638297872%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 54.170212765957444%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 53.4468085106383%, batch size: 3
+
+// met gtrends als percentage
+ 	 --- time it took for this loss function: 0:03:48.193992
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 67.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 62.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 65.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 61.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 67.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 70.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 70.0%, batch size: 3
+
+// ran 20 times with gtrends as %
+ 	 --- time it took for this loss function: 0:38:51.324854
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 67.125%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 66.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 66.25%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 67.625%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 68.125%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 69.125%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 65.5%, batch size: 3
+
+ // with 10 epochs
+ 	 --- time it took for this loss function: 0:07:08.620248
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 66.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 65.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 69.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 65.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 67.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 62.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 70.5%, batch size: 3
+
+
+ // 3 epochs no twitter sentiment
+ 	 --- time it took for this loss function: 0:19:47.251248
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 54.25531914893617%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 54.936170212765965%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 54.97872340425532%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 55.276595744680854%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 55.87234042553191%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 54.808510638297875%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 54.68085106382979%, batch size: 3
+
+ 	 --- time it took for this loss function: 0:04:02.903069
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 69.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 70.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 57.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 61.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 66.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 63.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 62.5%, batch size: 3
+
+ // with 'Open','High','Low' and 20 runs  (weet niet of met tweets of zonder)
+ 	 --- time it took for this loss function: 2:51:17.505212
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 65.125%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 60.375%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 63.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 64.125%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 58.25%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 58.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 62.25%, batch size: 3
+
+ // zonder google trends en zonder twitter met 3 epochs en 5 runs
+ 	 --- time it took for this loss function: 0:19:35.714690
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 54.08510638297872%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 54.12765957446809%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 53.65957446808511%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 52.97872340425532%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 53.40425531914893%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 54.25531914893617%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 55.19148936170213%, batch size: 3
+
+// zonder google trends met twitter met 1 epoch en 5 runs 
+ 	 --- time it took for this loss function: 0:03:47.448598
+Loss type: kullback_leibler_divergence, optimizer: SGD, precision: 60.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: RMSprop, precision: 64.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adagrad, precision: 68.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adadelta, precision: 67.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adam, precision: 69.0%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Adamax, precision: 66.5%, batch size: 3
+Loss type: kullback_leibler_divergence, optimizer: Nadam, precision: 60.5%, batch size: 3
